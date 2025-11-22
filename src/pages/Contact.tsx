@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import heroImage from "@/assets/hero-contact.jpg";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -51,8 +52,12 @@ export default function Contact() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
-        <div className="container mx-auto px-4">
+      <section className="relative py-32 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <img src={heroImage} alt="Contact Us" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/80"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">

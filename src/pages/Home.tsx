@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Ruler, PaintBucket, CheckCircle } from "lucide-react";
+import heroImage from "@/assets/hero-home.jpg";
 
 export default function Home() {
   const services = [
@@ -33,8 +34,10 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative h-[600px] md:h-[700px] bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80')] bg-cover bg-center opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        <div className="absolute inset-0 opacity-30">
+          <img src={heroImage} alt="Construction Site" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/75"></div>
         
         <div className="container mx-auto px-4 h-full flex items-center relative z-10">
           <div className="max-w-3xl animate-fade-in">
