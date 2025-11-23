@@ -149,7 +149,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-black-300 text-white scroll-animate bg-[#73b4cd]">
+      <section className="py-20 bg-black-300 text-white scroll-animate bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <Users className="w-16 h-16 mx-auto mb-6 text-white animate-float" />
