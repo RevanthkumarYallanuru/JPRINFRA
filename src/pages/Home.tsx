@@ -3,35 +3,38 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Ruler, PaintBucket, CheckCircle, Users, Award, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
-
 export default function Home() {
-  const services = [
-    {
-      icon: Building2,
-      title: "Residential Construction",
-      description: "Build dreams with us! We ensure precision, quality, and a personalized touch from foundation to rooftop.",
-    },
-    {
-      icon: Ruler,
-      title: "Architectural Designs",
-      description: "Artistry in every blueprint! Each detail transforms into a masterpiece, shaping spaces with unparalleled excellence.",
-    },
-    {
-      icon: PaintBucket,
-      title: "Interior Designs",
-      description: "Home Interior Experts. Transforming Spaces with Expertise and Dedication for beautiful living environments.",
-    },
-  ];
-
-  const features = [
-    { icon: Award, title: "Quality Work", description: "Premium quality in every project" },
-    { icon: Clock, title: "Timely Delivery", description: "On-time project completion" },
-    { icon: Users, title: "Expert Team", description: "Skilled professionals" },
-    { icon: CheckCircle, title: "Satisfaction", description: "100% client satisfaction" },
-  ];
-
-  return (
-    <div>
+  const services = [{
+    icon: Building2,
+    title: "Residential Construction",
+    description: "Build dreams with us! We ensure precision, quality, and a personalized touch from foundation to rooftop."
+  }, {
+    icon: Ruler,
+    title: "Architectural Designs",
+    description: "Artistry in every blueprint! Each detail transforms into a masterpiece, shaping spaces with unparalleled excellence."
+  }, {
+    icon: PaintBucket,
+    title: "Interior Designs",
+    description: "Home Interior Experts. Transforming Spaces with Expertise and Dedication for beautiful living environments."
+  }];
+  const features = [{
+    icon: Award,
+    title: "Quality Work",
+    description: "Premium quality in every project"
+  }, {
+    icon: Clock,
+    title: "Timely Delivery",
+    description: "On-time project completion"
+  }, {
+    icon: Users,
+    title: "Expert Team",
+    description: "Skilled professionals"
+  }, {
+    icon: CheckCircle,
+    title: "Satisfaction",
+    description: "100% client satisfaction"
+  }];
+  return <div>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
@@ -42,13 +45,19 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">JPR INFRAWORKS</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
-            <p className="text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            <p className="text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in" style={{
+            animationDelay: "0.2s"
+          }}>
               Building Your Dreams into Reality
             </p>
-            <p className="text-lg mb-8 text-white/90 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <p className="text-lg mb-8 text-white/90 animate-fade-in" style={{
+            animationDelay: "0.4s"
+          }}>
               Excellence in construction and infrastructure development with precision, quality, and dedication
             </p>
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.6s" }}>
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{
+            animationDelay: "0.6s"
+          }}>
               <Link to="/projects">
                 <Button size="lg" variant="secondary" className="text-lg hover:scale-105 transition-transform shadow-xl">
                   View Our Projects
@@ -75,8 +84,9 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up border-2 hover:border-primary" style={{ animationDelay: `${index * 100}ms` }}>
+            {services.map((service, index) => <Card key={index} className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-slide-up border-2 hover:border-primary" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <CardContent className="p-6">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
                     <service.icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
@@ -86,8 +96,7 @@ export default function Home() {
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">{service.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -103,8 +112,9 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div key={index} className="text-center p-6 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-2xl transition-all duration-500 group animate-scale-in cursor-pointer" style={{ animationDelay: `${index * 100}ms` }}>
+            {features.map((feature, index) => <div key={index} className="text-center p-6 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-2xl transition-all duration-500 group animate-scale-in cursor-pointer" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <div className="w-20 h-20 bg-primary/10 group-hover:bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
                   <feature.icon className="w-10 h-10 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
@@ -112,8 +122,7 @@ export default function Home() {
                 <p className="text-sm text-muted-foreground group-hover:text-primary-foreground/80 transition-colors">
                   {feature.description}
                 </p>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -133,13 +142,12 @@ export default function Home() {
               </Button>
             </Link>
             <Link to="/contact">
-              <Button size="lg" variant="outline" className="text-lg border-2 border-white text-white hover:bg-white hover:text-primary shadow-xl hover:scale-110 transition-all">
+              <Button size="lg" variant="outline" className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-110 transition-all text-violet-900">
                 Contact Us Today
               </Button>
             </Link>
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 }
