@@ -1,8 +1,11 @@
+// Services page component showcasing all company services
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Home, Ruler, PaintBucket, Hammer, Building } from "lucide-react";
 import heroImage from "@/assets/hero-services.jpg";
+import { siteData } from "@/lib/data";
 
 export default function Services() {
+  const { company } = siteData;
   const services = [
     {
       icon: Building2,
@@ -47,7 +50,7 @@ export default function Services() {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="JPR INFRAWORKS Services" className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt={`${company.name} Services`} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">

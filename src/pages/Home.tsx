@@ -1,49 +1,37 @@
+// Home page component with hero section, services, and features
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Ruler, PaintBucket, CheckCircle, Users, Award, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
+import { siteData } from "@/lib/data";
+
 export default function Home() {
-  const services = [{
-    icon: Building2,
-    title: "Residential Construction",
-    description: "Build dreams with us! We ensure precision, quality, and a personalized touch from foundation to rooftop."
-  }, {
-    icon: Ruler,
-    title: "Architectural Designs",
-    description: "Artistry in every blueprint! Each detail transforms into a masterpiece, shaping spaces with unparalleled excellence."
-  }, {
-    icon: PaintBucket,
-    title: "Interior Designs",
-    description: "Home Interior Experts. Transforming Spaces with Expertise and Dedication for beautiful living environments."
-  }];
-  const features = [{
-    icon: Award,
-    title: "Quality Work",
-    description: "Premium quality in every project"
-  }, {
-    icon: Clock,
-    title: "Timely Delivery",
-    description: "On-time project completion"
-  }, {
-    icon: Users,
-    title: "Expert Team",
-    description: "Skilled professionals"
-  }, {
-    icon: CheckCircle,
-    title: "Satisfaction",
-    description: "100% client satisfaction"
-  }];
+  const { company, services: servicesData, features: featuresData } = siteData;
+  
+  // Icon mapping for services (first 3 services)
+  const serviceIcons = [Building2, Ruler, PaintBucket];
+  const services = servicesData.slice(0, 3).map((service, index) => ({
+    ...service,
+    icon: serviceIcons[index],
+  }));
+  
+  // Icon mapping for features
+  const featureIcons = [Award, Clock, Users, CheckCircle];
+  const features = featuresData.map((feature, index) => ({
+    ...feature,
+    icon: featureIcons[index],
+  }));
   return <div>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="JPR INFRAWORKS Construction" className="w-full h-full object-cover" loading="eager" />
+          <img src={heroImage} alt={`${company.name} Construction`} className="w-full h-full object-cover" loading="eager" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-primary/40 to-black/70"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">JPR INFRAWORKS</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">{company.name}</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in" style={{
             animationDelay: "0.2s"
@@ -53,7 +41,7 @@ export default function Home() {
             <p className="text-lg mb-8 text-white/90 animate-fade-in" style={{
             animationDelay: "0.4s"
           }}>
-              Excellence in construction and infrastructure development with precision, quality, and dedication
+              {company.description}
             </p>
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{
             animationDelay: "0.6s"

@@ -1,7 +1,11 @@
+// About page component with company information and values
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Award, Users } from "lucide-react";
 import heroImage from "@/assets/hero-about.jpg";
+import { siteData } from "@/lib/data";
+
 export default function About() {
+  const { company, mission, vision, values, expertise, standOut } = siteData;
   return <div>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
@@ -11,7 +15,7 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About JPR INFRAWORKS</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About {company.name}</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
               Building excellence with precision, quality, and dedication since our inception
@@ -27,7 +31,7 @@ export default function About() {
             <h2 className="text-4xl font-bold text-primary mb-6 text-center">Who We Are</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="mb-4 leading-relaxed">
-                JPR INFRAWORKS is a leading construction and infrastructure development company dedicated to delivering exceptional quality and innovative solutions. With years of experience in the industry, we have established ourselves as a trusted name in residential, commercial, and infrastructure projects.
+                {company.fullDescription}
               </p>
               <p className="mb-4 leading-relaxed">
                 Our team of skilled professionals combines technical expertise with creative vision to transform your dreams into reality. We take pride in our commitment to excellence, timely delivery, and customer satisfaction.
@@ -49,9 +53,9 @@ export default function About() {
                 <div className="mb-4 p-4 bg-primary/10 rounded-full w-fit mx-auto group-hover:bg-primary group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
                   <Target className="w-10 h-10 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">Our Mission</h3>
+                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">{mission.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To deliver world-class construction solutions that exceed client expectations through innovation, quality craftsmanship, and sustainable practices.
+                  {mission.description}
                 </p>
               </CardContent>
             </Card>
@@ -63,9 +67,9 @@ export default function About() {
                 <div className="mb-4 p-4 bg-primary/10 rounded-full w-fit mx-auto group-hover:bg-primary group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
                   <Eye className="w-10 h-10 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">Our Vision</h3>
+                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">{vision.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  To be the most trusted and preferred construction company, setting new benchmarks in quality, innovation, and customer satisfaction.
+                  {vision.description}
                 </p>
               </CardContent>
             </Card>
@@ -77,9 +81,9 @@ export default function About() {
                 <div className="mb-4 p-4 bg-primary/10 rounded-full w-fit mx-auto group-hover:bg-primary group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
                   <Award className="w-10 h-10 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">Our Values</h3>
+                <h3 className="text-2xl font-bold text-primary mb-4 group-hover:text-foreground transition-colors">{values.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Integrity, Excellence, Innovation, Safety, and Customer-First approach guide everything we do in our projects.
+                  {values.description}
                 </p>
               </CardContent>
             </Card>
@@ -96,51 +100,23 @@ export default function About() {
               <div>
                 <h3 className="text-2xl font-semibold text-foreground mb-4">Our Expertise</h3>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Residential Construction & Development</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Commercial & Industrial Projects</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Infrastructure Development</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Architectural & Interior Design</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Project Management & Consulting</span>
-                  </li>
+                  {expertise.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
+                      <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div>
                 <h3 className="text-2xl font-semibold text-foreground mb-4">Why We Stand Out</h3>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">15+ years of industry experience</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Highly skilled and certified team</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Use of latest construction technology</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Commitment to safety and quality</span>
-                  </li>
-                  <li className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
-                    <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-muted-foreground">Transparent pricing and timelines</span>
-                  </li>
+                  {standOut.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3 hover:translate-x-2 transition-transform duration-300">
+                      <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

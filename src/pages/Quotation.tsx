@@ -1,3 +1,4 @@
+// Quotation page component with cost estimation calculator
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calculator, Download } from "lucide-react";
 import heroImage from "@/assets/hero-quotation.jpg";
+import { siteData } from "@/lib/data";
+
 export default function Quotation() {
+  const { company } = siteData;
   const [formData, setFormData] = useState({
     projectType: "",
     area: "",
@@ -61,7 +65,7 @@ export default function Quotation() {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="JPR INFRAWORKS Quotation" className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt={`${company.name} Quotation`} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">

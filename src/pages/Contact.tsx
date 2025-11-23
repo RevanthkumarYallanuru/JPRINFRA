@@ -1,3 +1,4 @@
+// Contact page component with contact form and information
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,9 +7,11 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-contact.jpg";
+import { siteData } from "@/lib/data";
 
 export default function Contact() {
   const { toast } = useToast();
+  const { company, contact } = siteData;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,22 +33,22 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Phone",
-      details: ["+91 98765 43210", "+91 98765 43211"],
+      details: [contact.phone, contact.phoneSecondary],
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["contact@jprinfraworks.com", "info@jprinfraworks.com"],
+      details: [contact.email, contact.emailSecondary],
     },
     {
       icon: MapPin,
       title: "Address",
-      details: ["123 Construction Avenue", "Building City, India - 560001"],
+      details: [contact.address.line1, contact.address.line2],
     },
     {
       icon: Clock,
       title: "Working Hours",
-      details: ["Monday - Friday: 9:00 AM - 6:00 PM", "Saturday: 9:00 AM - 2:00 PM"],
+      details: [contact.workingHours.weekdays, contact.workingHours.saturday],
     },
   ];
 
@@ -54,12 +57,12 @@ export default function Contact() {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="Contact JPR INFRAWORKS" className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt={`Contact ${company.name}`} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Contact Us</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Contact {company.name}</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
               Get in touch with us for any inquiries or project consultations
@@ -112,7 +115,7 @@ export default function Contact() {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+91 98765 43210"
+                        placeholder={contact.phone}
                         className="hover:border-primary transition-colors"
                       />
                     </div>

@@ -1,11 +1,14 @@
+// Projects page component displaying company portfolio
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-projects.jpg";
+import { siteData } from "@/lib/data";
 
 export default function Projects() {
+  const { company } = siteData;
   const [filter, setFilter] = useState("all");
 
   const projects = [
@@ -87,7 +90,7 @@ export default function Projects() {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="JPR INFRAWORKS Projects" className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt={`${company.name} Projects`} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">

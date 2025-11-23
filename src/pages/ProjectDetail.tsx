@@ -1,3 +1,4 @@
+// Project detail page component showing individual project information
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

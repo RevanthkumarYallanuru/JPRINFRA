@@ -1,20 +1,14 @@
+// Header component with navigation and company branding
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import { Button } from "@/components/ui/button";
+import { siteData } from "@/lib/data";
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const navLinks = [
-    { to: "/", label: "HOME" },
-    { to: "/about", label: "ABOUT US" },
-    { to: "/services", label: "SERVICES" },
-    { to: "/projects", label: "PROJECTS" },
-    { to: "/quotation", label: "QUOTATION" },
-    { to: "/contact", label: "CONTACT" },
-  ];
+  const { navLinks, company, contact } = siteData;
 
   return (
     <header className="sticky top-0 z-40 bg-background border-b border-border">
@@ -23,18 +17,18 @@ export const Header = () => {
         <div className="container mx-auto px-4 py-2">
           <div className="flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
-              <a href="mailto:contact@jprinfraworks.com" className="flex items-center gap-2 hover:text-secondary transition-colors">
+              <a href={`mailto:${contact.email}`} className="flex items-center gap-2 hover:text-secondary transition-colors">
                 <Mail className="w-4 h-4" />
-                <span className="hidden sm:inline">contact@jprinfraworks.com</span>
+                <span className="hidden sm:inline">{contact.email}</span>
               </a>
-              <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-secondary transition-colors">
+              <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 hover:text-secondary transition-colors">
                 <Phone className="w-4 h-4" />
-                <span className="hidden sm:inline">+91 98765 43210</span>
+                <span className="hidden sm:inline">{contact.phone}</span>
               </a>
             </div>
             <div className="text-xs sm:text-sm font-medium">
               <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded">
-                BUILDING EXCELLENCE
+                {company.tagline}
               </span>
             </div>
           </div>
@@ -48,13 +42,13 @@ export const Header = () => {
           <Link to="/" className="flex items-center gap-3">
             <img 
               src={logo} 
-              alt="JPR INFRAWORKERS" 
+              alt={company.name} 
               className="h-12 w-12 object-contain"
               loading="eager"
             />
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-primary">JPR INFRAWORKS</h1>
-              <p className="text-xs text-muted-foreground tracking-wider">BUILDING EXCELLENCE</p>
+              <h1 className="text-xl font-bold text-primary">{company.name}</h1>
+              <p className="text-xs text-muted-foreground tracking-wider">{company.tagline}</p>
             </div>
           </Link>
 

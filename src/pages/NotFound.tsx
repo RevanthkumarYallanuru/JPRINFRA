@@ -1,3 +1,4 @@
+// 404 Not Found page component
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 

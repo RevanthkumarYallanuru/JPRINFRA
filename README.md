@@ -1,73 +1,106 @@
-# Welcome to your Lovable project
+# JPR INFRAWORKS - Construction & Infrastructure Website
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/18f7eabd-95c0-4cd8-b71a-12112ad6e1c2
+This is a modern, responsive website for JPR INFRAWORKS, a leading construction and infrastructure development company. The website showcases services, projects, and provides contact information for potential clients.
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/18f7eabd-95c0-4cd8-b71a-12112ad6e1c2) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Vite** - Fast build tool and development server
+- **TypeScript** - Type-safe JavaScript
+- **React** - UI library for building user interfaces
+- **React Router** - Client-side routing
+- **shadcn-ui** - High-quality component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **TanStack Query** - Data fetching and state management
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/18f7eabd-95c0-4cd8-b71a-12112ad6e1c2) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+- Node.js (v18 or higher recommended)
+- npm or yarn package manager
 
-Yes, you can!
+### Installation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Clone the repository:
+```sh
+git clone <YOUR_GIT_URL>
+cd jpr-infrabuild
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+2. Install dependencies:
+```sh
+npm install
+```
+
+3. Start the development server:
+```sh
+npm run dev
+```
+
+The application will be available at `http://localhost:8080`
+
+### Build for Production
+
+```sh
+npm run build
+```
+
+The production build will be in the `dist` directory.
+
+### Preview Production Build
+
+```sh
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable React components
+├── pages/          # Page components
+├── lib/            # Utility functions and data
+├── assets/         # Images and static assets
+├── hooks/          # Custom React hooks
+└── App.tsx         # Main application component
+```
+
+## Configuration
+
+All company information, contact details, and content can be updated from a single file:
+
+**`src/lib/data.ts`** - Centralized configuration file containing:
+- Company information
+- Contact details
+- Navigation links
+- Services
+- Social media links
+- SEO metadata
+
+Update this file to change website content without searching through multiple components.
+
+## Features
+
+- Responsive design for all devices
+- Modern UI with smooth animations
+- Contact form with validation
+- Project showcase
+- Service listings
+- About page with company information
+- Quotation request page
+
+## Development
+
+### Linting
+
+```sh
+npm run lint
+```
+
+## License
+
+© 2024 JPR INFRAWORKS. All rights reserved.

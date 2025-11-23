@@ -1,3 +1,4 @@
+// Main application component with routing and providers
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,7 +15,10 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import Quotation from "./pages/Quotation";
 import NotFound from "./pages/NotFound";
+
+// Initialize React Query client for data fetching
 const queryClient = new QueryClient();
+
 const App = () => <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
