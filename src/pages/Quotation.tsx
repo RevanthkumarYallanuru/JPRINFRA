@@ -229,7 +229,7 @@ export default function Quotation() {
               </Button>
             </a>
             <a href="/projects">
-              <Button size="lg" variant="outline" className="px-8 border-2 border-white text-white hover:text-primary hover:scale-110 transition-all shadow-xl bg-slate-950 hover:bg-slate-800">
+              <Button size="lg" variant="outline" className="px-8 border-2 border-white hover:scale-110 transition-all shadow-xl bg-slate-950 hover:bg-slate-800 text-amber-500">
                 VIEW PROJECTS
               </Button>
             </a>
