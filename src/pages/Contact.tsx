@@ -52,29 +52,30 @@ export default function Contact() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <img src={heroImage} alt="Contact Us" className="w-full h-full object-cover" loading="lazy" />
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImage} alt="Contact JPR INFRAWORKS" className="w-full h-full object-cover" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Contact Us</h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Get in touch with us for your construction needs. We're here to help!
+          <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Contact Us</h1>
+            <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
+            <p className="text-xl md:text-2xl leading-relaxed">
+              Get in touch with us for any inquiries or project consultations
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Content */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="animate-slide-up">
               <h2 className="text-3xl font-bold text-primary mb-6">Send us a Message</h2>
-              <Card>
+              <Card className="hover:shadow-2xl transition-shadow duration-500">
                 <CardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -86,6 +87,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="John Doe"
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
                     <div>
@@ -98,6 +100,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="john@example.com"
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
                     <div>
@@ -110,6 +113,7 @@ export default function Contact() {
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+91 98765 43210"
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
                     <div>
@@ -121,6 +125,7 @@ export default function Contact() {
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder="Project Inquiry"
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
                     <div>
@@ -133,9 +138,10 @@ export default function Contact() {
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="Tell us about your project requirements..."
                         rows={6}
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full">
+                    <Button type="submit" size="lg" className="w-full hover:scale-105 transition-transform">
                       Send Message
                     </Button>
                   </form>
@@ -147,14 +153,14 @@ export default function Contact() {
             <div className="space-y-6 animate-slide-up" style={{ animationDelay: "100ms" }}>
               <h2 className="text-3xl font-bold text-primary mb-6">Contact Information</h2>
               {contactInfo.map((info, index) => (
-                <Card key={index}>
+                <Card key={index} className="hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary group">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                        <info.icon className="w-6 h-6 text-primary" />
+                      <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary group-hover:scale-125 group-hover:rotate-6 transition-all duration-500">
+                        <info.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">{info.title}</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">{info.title}</h3>
                         {info.details.map((detail, idx) => (
                           <p key={idx} className="text-muted-foreground">{detail}</p>
                         ))}
@@ -163,15 +169,6 @@ export default function Contact() {
                   </CardContent>
                 </Card>
               ))}
-
-              {/* Map */}
-              <Card>
-                <CardContent className="p-0 overflow-hidden">
-                  <div className="w-full h-64 bg-muted flex items-center justify-center">
-                    <p className="text-muted-foreground">Map Integration Placeholder</p>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>

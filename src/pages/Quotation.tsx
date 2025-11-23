@@ -52,29 +52,29 @@ export default function Quotation() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img src={heroImage} alt="Construction Cost Calculator" className="w-full h-full object-cover" loading="lazy" />
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImage} alt="JPR INFRAWORKS Quotation" className="w-full h-full object-cover" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <Calculator className="w-16 h-16 mx-auto mb-6 text-secondary" />
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Quotation Generator</h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Get an instant approximate cost estimate for your construction project
+          <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Get Free Quotation</h1>
+            <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
+            <p className="text-xl md:text-2xl leading-relaxed">
+              Calculate an approximate cost for your construction project
             </p>
           </div>
         </div>
       </section>
 
       {/* Calculator Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Input Form */}
-              <Card className="animate-slide-up">
+              <Card className="animate-slide-up hover:shadow-2xl transition-shadow duration-500">
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-bold text-primary mb-6">Project Details</h2>
                   <div className="space-y-4">
@@ -84,7 +84,7 @@ export default function Quotation() {
                         value={formData.projectType}
                         onValueChange={(value) => setFormData({ ...formData, projectType: value })}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="hover:border-primary transition-colors">
                           <SelectValue placeholder="Select project type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -104,6 +104,7 @@ export default function Quotation() {
                         placeholder="e.g., 2000"
                         value={formData.area}
                         onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
 
@@ -115,6 +116,7 @@ export default function Quotation() {
                         placeholder="e.g., 2"
                         value={formData.floors}
                         onChange={(e) => setFormData({ ...formData, floors: e.target.value })}
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
 
@@ -125,6 +127,7 @@ export default function Quotation() {
                         placeholder="City, State"
                         value={formData.location}
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        className="hover:border-primary transition-colors"
                       />
                     </div>
 
@@ -134,7 +137,7 @@ export default function Quotation() {
                         value={formData.quality}
                         onValueChange={(value) => setFormData({ ...formData, quality: value })}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="hover:border-primary transition-colors">
                           <SelectValue placeholder="Select quality level" />
                         </SelectTrigger>
                         <SelectContent>
@@ -145,7 +148,7 @@ export default function Quotation() {
                       </Select>
                     </div>
 
-                    <Button onClick={calculateEstimate} className="w-full" size="lg">
+                    <Button onClick={calculateEstimate} className="w-full hover:scale-105 transition-transform" size="lg">
                       <Calculator className="w-5 h-5 mr-2" />
                       Calculate Estimate
                     </Button>
@@ -155,44 +158,44 @@ export default function Quotation() {
 
               {/* Result Display */}
               <div className="space-y-6 animate-slide-up" style={{ animationDelay: "100ms" }}>
-                <Card>
+                <Card className="hover:shadow-2xl transition-shadow duration-500">
                   <CardContent className="p-6">
                     <h2 className="text-2xl font-bold text-primary mb-6">Estimated Cost</h2>
                     {estimate ? (
                       <div className="space-y-6">
-                        <div className="p-8 bg-primary/5 rounded-lg text-center">
+                        <div className="p-8 bg-primary/5 rounded-lg text-center hover:bg-primary/10 transition-colors duration-300">
                           <p className="text-sm text-muted-foreground mb-2">Approximate Total Cost</p>
-                          <p className="text-4xl font-bold text-primary">{formatCurrency(estimate)}</p>
+                          <p className="text-4xl font-bold text-primary animate-scale-in">{formatCurrency(estimate)}</p>
                           <p className="text-sm text-muted-foreground mt-2">+ Taxes & Other Charges</p>
                         </div>
 
                         <div className="space-y-3">
-                          <div className="flex justify-between py-2 border-b">
+                          <div className="flex justify-between py-2 border-b hover:bg-muted transition-colors duration-300 px-2 rounded">
                             <span className="text-muted-foreground">Project Type:</span>
                             <span className="font-semibold capitalize">{formData.projectType}</span>
                           </div>
-                          <div className="flex justify-between py-2 border-b">
+                          <div className="flex justify-between py-2 border-b hover:bg-muted transition-colors duration-300 px-2 rounded">
                             <span className="text-muted-foreground">Total Area:</span>
                             <span className="font-semibold">{formData.area} sq ft</span>
                           </div>
-                          <div className="flex justify-between py-2 border-b">
+                          <div className="flex justify-between py-2 border-b hover:bg-muted transition-colors duration-300 px-2 rounded">
                             <span className="text-muted-foreground">Floors:</span>
                             <span className="font-semibold">{formData.floors}</span>
                           </div>
-                          <div className="flex justify-between py-2 border-b">
+                          <div className="flex justify-between py-2 border-b hover:bg-muted transition-colors duration-300 px-2 rounded">
                             <span className="text-muted-foreground">Quality Level:</span>
                             <span className="font-semibold capitalize">{formData.quality}</span>
                           </div>
                         </div>
 
-                        <Button variant="outline" className="w-full">
+                        <Button variant="outline" className="w-full hover:scale-105 transition-transform">
                           <Download className="w-5 h-5 mr-2" />
                           Download Estimate PDF
                         </Button>
                       </div>
                     ) : (
                       <div className="text-center py-12">
-                        <Calculator className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
+                        <Calculator className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50 animate-float" />
                         <p className="text-muted-foreground">
                           Fill in the project details and click "Calculate Estimate" to get your quotation.
                         </p>
@@ -202,7 +205,7 @@ export default function Quotation() {
                 </Card>
 
                 {/* Disclaimer */}
-                <Card className="bg-muted/50">
+                <Card className="bg-muted/50 hover:shadow-xl transition-shadow duration-500">
                   <CardContent className="p-6">
                     <h3 className="font-semibold text-foreground mb-2">Important Note</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
@@ -219,20 +222,20 @@ export default function Quotation() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary text-white scroll-animate">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-primary-foreground/90">
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
             Contact us today for a detailed consultation and accurate project quotation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/contact">
-              <Button size="lg" variant="secondary" className="px-8">
+              <Button size="lg" variant="secondary" className="px-8 hover:scale-110 transition-transform shadow-xl">
                 CONTACT US
               </Button>
             </a>
             <a href="/projects">
-              <Button size="lg" variant="outline" className="px-8 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              <Button size="lg" variant="outline" className="px-8 border-2 border-white text-white hover:bg-white hover:text-primary hover:scale-110 transition-all shadow-xl">
                 VIEW PROJECTS
               </Button>
             </a>

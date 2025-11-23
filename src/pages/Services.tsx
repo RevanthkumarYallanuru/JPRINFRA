@@ -45,44 +45,46 @@ export default function Services() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 opacity-25">
-          <img src={heroImage} alt="Our Services" className="w-full h-full object-cover" loading="lazy" />
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImage} alt="JPR INFRAWORKS Services" className="w-full h-full object-cover" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Our Services</h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Comprehensive Construction & Infrastructure Solutions Tailored to Your Needs
+          <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Services</h1>
+            <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
+            <p className="text-xl md:text-2xl leading-relaxed">
+              Comprehensive construction and infrastructure solutions for your every need
             </p>
           </div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-300 animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+              <Card key={index} className="group hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 overflow-hidden animate-slide-up border-2 hover:border-primary" style={{ animationDelay: `${index * 100}ms` }}>
                 <CardContent className="p-6">
-                  <div className="mb-6 p-4 bg-primary/5 rounded-lg w-fit group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                    <service.icon className="w-10 h-10 text-primary group-hover:text-primary-foreground transition-colors" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
+                      <service.icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-4">{service.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6">{service.description}</p>
-                  <div className="border-t border-border pt-4">
-                    <h4 className="font-semibold text-foreground mb-3">Key Features:</h4>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <div className="w-1.5 h-1.5 bg-secondary rounded-full"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, fIndex) => (
+                      <li key={fIndex} className="flex items-center gap-2 text-sm text-muted-foreground hover:translate-x-2 transition-transform duration-300">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
             ))}
@@ -91,7 +93,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20 bg-muted/50 scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl font-bold text-primary text-center mb-12">Our Process</h2>
@@ -102,8 +104,8 @@ export default function Services() {
                 { step: "03", title: "Execution", desc: "Quality construction work" },
                 { step: "04", title: "Delivery", desc: "On-time project handover" },
               ].map((item, index) => (
-                <div key={index} className="text-center animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-                  <div className="text-5xl font-bold text-secondary mb-3">{item.step}</div>
+                <div key={index} className="text-center animate-slide-up hover:scale-110 transition-transform duration-500 cursor-pointer" style={{ animationDelay: `${index * 100}ms` }}>
+                  <div className="text-5xl font-bold text-secondary mb-3 hover:text-primary transition-colors">{item.step}</div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
@@ -114,13 +116,13 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary text-white scroll-animate">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">Need Our Services?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-primary-foreground/90">
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
             Let's discuss your project requirements and create something exceptional together.
           </p>
-          <a href="/contact" className="inline-block bg-secondary text-secondary-foreground px-8 py-4 rounded-md text-lg font-semibold hover:scale-105 transition-transform">
+          <a href="/contact" className="inline-block bg-white text-primary px-8 py-4 rounded-md text-lg font-semibold hover:scale-110 transition-transform shadow-xl">
             GET A QUOTE
           </a>
         </div>

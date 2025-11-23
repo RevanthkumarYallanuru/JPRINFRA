@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
 
 export const Footer = () => {
@@ -12,12 +13,12 @@ export const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <img 
                 src={logo} 
-                alt="JPR INFRAWORKERS" 
-                className="h-12 w-12 object-contain brightness-0 invert"
+                alt="JPR INFRAWORKS" 
+                className="h-12 w-12 object-contain rounded-lg"
               />
               <div>
-                <h3 className="text-lg font-bold">JPR</h3>
-                <p className="text-xs tracking-wider">INFRAWORKERS</p>
+                <h3 className="text-xl font-bold">JPR INFRAWORKS</h3>
+                <p className="text-xs tracking-wider">BUILDING EXCELLENCE</p>
               </div>
             </div>
             <p className="text-sm text-primary-foreground/80 leading-relaxed">
@@ -96,10 +97,17 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
-          <p className="text-sm text-primary-foreground/80">
-            © {new Date().getFullYear()} JPR INFRAWORKERS. All rights reserved.
-          </p>
+        <div className="border-t border-primary-foreground/20 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-primary-foreground/80">
+              © {new Date().getFullYear()} JPR INFRAWORKS. All rights reserved.
+            </p>
+            <Link to="/projects">
+              <Button variant="secondary" size="lg" className="font-semibold shadow-lg hover:shadow-xl transition-all">
+                View Our Projects
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

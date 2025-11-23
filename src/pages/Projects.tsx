@@ -85,15 +85,16 @@ export default function Projects() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 opacity-25">
-          <img src={heroImage} alt="Our Projects" className="w-full h-full object-cover" loading="lazy" />
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImage} alt="JPR INFRAWORKS Projects" className="w-full h-full object-cover" loading="lazy" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 to-primary/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Our Projects</h1>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Projects</h1>
+            <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
+            <p className="text-xl md:text-2xl leading-relaxed">
               Explore our portfolio of successfully delivered and ongoing construction projects
             </p>
           </div>
@@ -138,22 +139,23 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
               <Link to={`/projects/${project.id}`} key={project.id}>
-                <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+                <Card className="group hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 overflow-hidden animate-slide-up border-2 hover:border-primary" style={{ animationDelay: `${index * 50}ms` }}>
                   <div className="relative h-64 overflow-hidden">
                     <img 
                       src={project.image} 
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
                       loading="lazy"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4">
-                      <Badge className={`${getStatusColor(project.status)} text-white capitalize`}>
+                      <Badge className={`${getStatusColor(project.status)} text-white capitalize shadow-lg`}>
                         {project.status}
                       </Badge>
                     </div>
                   </div>
                   <CardContent className="p-6">
-                    <Badge variant="outline" className="mb-3">{project.category}</Badge>
+                    <Badge variant="outline" className="mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">{project.category}</Badge>
                     <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>

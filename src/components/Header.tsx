@@ -53,8 +53,8 @@ export const Header = () => {
               loading="eager"
             />
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-primary">JPR</h1>
-              <p className="text-xs text-muted-foreground tracking-wider">INFRAWORKERS</p>
+              <h1 className="text-xl font-bold text-primary">JPR INFRAWORKS</h1>
+              <p className="text-xs text-muted-foreground tracking-wider">BUILDING EXCELLENCE</p>
             </div>
           </Link>
 
