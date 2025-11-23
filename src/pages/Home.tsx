@@ -64,7 +64,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to="/contact">
-                <Button size="lg" variant="outline" className="text-lg border-2 border-white text-white hover:bg-white hover:text-primary shadow-xl hover:scale-105 transition-all">
+                <Button size="lg" variant="outline" className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-105 transition-all text-violet-950">
                   Contact Us
                 </Button>
               </Link>
