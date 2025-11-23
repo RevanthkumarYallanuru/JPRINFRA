@@ -128,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary text-white scroll-animate">
+      <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary scroll-animate bg-slate-950 text-slate-50">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">Ready to Start Your Project?</h2>
           <div className="h-1 w-32 bg-white mx-auto mb-6 animate-scale-in"></div>

@@ -14,11 +14,8 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import Quotation from "./pages/Quotation";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+const App = () => <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -27,7 +24,7 @@ const App = () => (
         <Header />
         <main>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />} className="bg-zinc-800 text-slate-700" />
             <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/projects" element={<Projects />} />
@@ -40,7 +37,5 @@ const App = () => (
         <Footer />
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
-);
-
+  </QueryClientProvider>;
 export default App;
