@@ -84,7 +84,14 @@ export default function ProjectDetail() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="py-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+      <section className="py-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="w-full h-full" />
+        </div>
+        <div className="hero-motion-overlay">
+          <div className="float-blob left" />
+          <div className="float-blob right" />
+        </div>
         <div className="container mx-auto px-4">
           <Link to="/projects">
             <Button variant="ghost" className="mb-6 text-primary-foreground hover:bg-primary-foreground/20">

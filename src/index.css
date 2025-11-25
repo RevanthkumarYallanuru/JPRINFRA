@@ -221,3 +221,57 @@ All colors MUST be HSL. This file contains the CSS custom properties for the the
 .transform-3d {
   transform-style: preserve-3d;
 }
+
+/* Scroll animation helpers */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 700ms cubic-bezier(.2,.9,.2,1), transform 700ms cubic-bezier(.2,.9,.2,1);
+}
+.scroll-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero motion overlay (subtle stripes + floating shapes) */
+.hero-motion-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.hero-motion-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 8px);
+  animation: move-stripes 8s linear infinite;
+}
+.hero-motion-overlay .float-blob {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+  filter: blur(24px);
+  animation: float-blob 6s ease-in-out infinite;
+}
+.hero-motion-overlay .float-blob.right { right: 6%; bottom: 8%; }
+.hero-motion-overlay .float-blob.left { left: 6%; top: 12%; animation-delay: 1.5s; }
+
+@keyframes move-stripes {
+  from { background-position: 0 0; }
+  to { background-position: 400px 400px; }
+}
+
+@keyframes float-blob {
+  0%,100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-18px) translateZ(20px); }
+}
+
+/* Reduce motion on small screens and when user prefers reduced motion */
+@media (max-width: 640px), (prefers-reduced-motion: reduce) {
+  .hero-motion-overlay::before { display: none; }
+  .hero-motion-overlay .float-blob { display: none; }
+  .scroll-animate { transition: opacity 300ms ease; }
+}

@@ -53,6 +53,10 @@ export default function Services() {
           <img src={heroImage} alt={`${company.name} Services`} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
+        <div className="hero-motion-overlay">
+          <div className="float-blob left" />
+          <div className="float-blob right" />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Services</h1>

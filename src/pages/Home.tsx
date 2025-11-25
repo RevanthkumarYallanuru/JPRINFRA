@@ -73,6 +73,10 @@ export default function Home() {
             loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/30 to-black/80" />
+          <div className="hero-motion-overlay">
+            <div className="float-blob left" />
+            <div className="float-blob right" />
+          </div>
         </div>
 
         {/* Floating Decorative Elements */}

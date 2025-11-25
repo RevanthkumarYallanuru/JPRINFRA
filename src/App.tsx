@@ -8,6 +8,7 @@ import { Loader } from "@/components/Loader";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import ScrollAnimator from "@/components/ScrollAnimator";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -39,6 +40,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Loader />
+        <ScrollAnimator />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
