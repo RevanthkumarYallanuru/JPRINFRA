@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calculator, Download } from "lucide-react";
 import heroImage from "@/assets/hero-quotation.jpg";
+import { useToast } from "@/hooks/use-toast";
 import { siteData } from "@/lib/data";
+import { saveQuotationRequest } from "@/lib/firebase/leads";
 
 export default function Quotation() {
+  const { toast } = useToast();
   const { company } = siteData;
   const [formData, setFormData] = useState({
     projectType: "",
@@ -19,10 +22,15 @@ export default function Quotation() {
     quality: ""
   });
   const [estimate, setEstimate] = useState<number | null>(null);
-  const calculateEstimate = () => {
+  const calculateEstimate = async () => {
     const area = parseFloat(formData.area);
     const floors = parseInt(formData.floors);
     if (!area || !floors || !formData.projectType || !formData.quality) {
+      toast({
+        title: "Missing details",
+        description: "Please fill every required field to generate an estimate.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -53,6 +61,25 @@ export default function Quotation() {
     const floorMultiplier = 1 + (floors - 1) * 0.15; // 15% increase per additional floor
     const total = area * rate * floorMultiplier;
     setEstimate(total);
+
+    try {
+      await saveQuotationRequest({
+        ...formData,
+        area,
+        floors,
+        estimate: total,
+      });
+      toast({
+        title: "Estimate ready",
+        description: "Your quotation request has been saved for follow-up.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Unable to save request",
+        description: error.message || "Please try again.",
+        variant: "destructive",
+      });
+    }
   };
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-IN', {

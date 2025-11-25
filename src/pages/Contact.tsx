@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-contact.jpg";
 import { siteData } from "@/lib/data";
+import { saveContactLead } from "@/lib/firebase/leads";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -20,13 +21,22 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    try {
+      await saveContactLead(formData);
+      toast({
+        title: "Message submitted",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (error: any) {
+      toast({
+        title: "Unable to send message",
+        description: error.message || "Please try again in a moment.",
+        variant: "destructive",
+      });
+    }
   };
 
   const contactInfo = [

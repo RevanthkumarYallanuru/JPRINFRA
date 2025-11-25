@@ -10,7 +10,8 @@ import { siteData } from "@/lib/data";
 export default function Home() {
   const { company, services: servicesData, features: featuresData } = siteData;
   const heroRef = useRef<HTMLElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorState, setCursorState] = useState({ x: 0, y: 0, tiltX: 0, tiltY: 0 });
+  const [cursorActive, setCursorActive] = useState(false);
   
   // Icon mapping for services (first 3 services)
   const serviceIcons = [Building2, Ruler, PaintBucket];
@@ -26,174 +27,123 @@ export default function Home() {
     icon: featureIcons[index],
   }));
 
-  // Mouse move handler for 3D parallax effect
+  // Mouse move handler for hero cursor effect
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-        setMousePosition({ x, y });
-      }
+    const heroElement = heroRef.current;
+    if (!heroElement) return;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = heroElement.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const tiltX = ((x / rect.width) - 0.5) * 8;
+      const tiltY = ((y / rect.height) - 0.5) * -8;
+
+      setCursorState({ x, y, tiltX, tiltY });
     };
 
-    const heroElement = heroRef.current;
-    if (heroElement) {
-      heroElement.addEventListener("mousemove", handleMouseMove);
-      return () => heroElement.removeEventListener("mousemove", handleMouseMove);
-    }
+    const handleMouseEnter = () => setCursorActive(true);
+    const handleMouseLeave = () => {
+      setCursorActive(false);
+      setCursorState((current) => ({ ...current, tiltX: 0, tiltY: 0 }));
+    };
+
+    heroElement.addEventListener("mousemove", handleMouseMove);
+    heroElement.addEventListener("mouseenter", handleMouseEnter);
+    heroElement.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      heroElement.removeEventListener("mousemove", handleMouseMove);
+      heroElement.removeEventListener("mouseenter", handleMouseEnter);
+      heroElement.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, []);
 
   return <div>
-      {/* Hero Section with 3D Animations */}
-      <section 
+      {/* Hero Section with custom 3D cursor */}
+      <section
         ref={heroRef}
-        className="relative py-32 overflow-hidden perspective-3d"
-        style={{
-          transformStyle: "preserve-3d",
-        }}
+        className="relative py-32 overflow-hidden bg-black text-white md:cursor-none"
       >
-        {/* Background Image with 3D Parallax */}
-        <div 
-          className="absolute inset-0 transform-3d"
-          style={{
-            transform: `perspective(1000px) translateZ(${mousePosition.x * 0.5}px) rotateY(${mousePosition.x * 0.1}deg) rotateX(${-mousePosition.y * 0.1}deg)`,
-            transition: "transform 0.1s ease-out",
-          }}
-        >
-          <img 
-            src={heroImage} 
-            alt={`${company.name} Construction`} 
-            className="w-full h-full object-cover animate-parallax-3d" 
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt={`${company.name} Construction`}
+            className="w-full h-full object-cover scale-105"
             loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/30 to-black/80" />
+        </div>
+
+        {/* Floating Decorative Elements */}
+        <div className="absolute top-16 left-8 w-32 h-32 bg-secondary/20 rounded-full blur-3xl animate-float-3d" />
+        <div
+          className="absolute bottom-10 right-12 w-48 h-48 bg-primary/30 rounded-full blur-2xl animate-float-3d"
+          style={{ animationDelay: "2s" }}
+        />
+        <div
+          className="absolute top-1/2 right-1/4 w-24 h-24 bg-secondary/40 rounded-full blur-xl animate-depth-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+
+        {/* 3D cursor overlay */}
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="hidden md:block w-32 h-32 rounded-full bg-gradient-to-br from-white/40 via-white/10 to-transparent border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.45)] transition-all duration-75 ease-out"
             style={{
-              transform: "scale(1.1)",
+              opacity: cursorActive ? 0.85 : 0,
+              transform: `translate3d(${cursorState.x - 64}px, ${cursorState.y - 64}px, 0) scale(${cursorActive ? 1 : 0.9})`,
+              mixBlendMode: "screen",
+            }}
+          />
+          <div
+            className="hidden md:block w-12 h-12 rounded-full bg-white/70 blur-3xl transition-all duration-100 ease-out"
+            style={{
+              opacity: cursorActive ? 0.6 : 0,
+              transform: `translate3d(${cursorState.x - 24}px, ${cursorState.y - 24}px, 0)`,
+              mixBlendMode: "screen",
             }}
           />
         </div>
-        
-        {/* Gradient Overlay with Depth */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-black/60 via-primary/40 to-black/70 transform-3d"
-          style={{
-            transform: `translateZ(10px)`,
-          }}
-        />
 
-        {/* Floating 3D Decorative Elements */}
-        <div 
-          className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-xl animate-float-3d transform-3d"
-          style={{
-            transform: `translateZ(50px)`,
-            animationDelay: "0s",
-          }}
-        />
-        <div 
-          className="absolute bottom-20 right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl animate-float-3d transform-3d"
-          style={{
-            transform: `translateZ(30px)`,
-            animationDelay: "2s",
-          }}
-        />
-        <div 
-          className="absolute top-1/2 right-20 w-24 h-24 bg-secondary/30 rounded-full blur-lg animate-depth-pulse transform-3d"
-          style={{
-            transform: `translateZ(40px)`,
-            animationDelay: "1s",
-          }}
-        />
-
-        {/* Main Content with 3D Transform */}
-        <div className="container mx-auto px-4 relative z-10 transform-3d">
-          <div 
-            className="max-w-4xl mx-auto text-center text-white"
+        {/* Main Content */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div
+            className="max-w-4xl mx-auto text-center transition-transform duration-100 ease-out"
             style={{
-              transform: `perspective(1000px) translateZ(${mousePosition.y * 0.3}px) rotateX(${-mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg)`,
-              transition: "transform 0.1s ease-out",
+              transform: `rotateX(${cursorState.tiltY}deg) rotateY(${cursorState.tiltX}deg)`,
+              transformStyle: "preserve-3d",
             }}
           >
-            {/* Company Name with 3D Glow Effect */}
-            <h1 
-              className="text-5xl md:text-7xl font-bold mb-6 animate-slide-in-3d animate-glow-3d"
-              style={{
-                textShadow: "0 0 30px rgba(43, 96%, 56%, 0.5), 0 0 60px rgba(43, 96%, 56%, 0.3)",
-                transform: "perspective(1000px) translateZ(20px)",
-              }}
-            >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
               {company.name}
             </h1>
-            
-            {/* Decorative Line with 3D Effect */}
-            <div 
-              className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in transform-3d"
-              style={{
-                transform: "perspective(1000px) translateZ(15px) rotateX(45deg)",
-                boxShadow: "0 0 20px rgba(43, 96%, 56%, 0.6)",
-              }}
-            />
-            
-            {/* Tagline with Floating Animation */}
-            <p 
-              className="text-xl md:text-2xl mb-8 leading-relaxed animate-float-3d transform-3d"
-              style={{
-                animationDelay: "0.2s",
-                transform: "perspective(1000px) translateZ(10px)",
-              }}
-            >
+
+            <div className="h-1 w-32 bg-secondary mx-auto mb-6 shadow-[0_0_20px_rgba(226,232,240,0.6)]" />
+
+            <p className="text-xl md:text-2xl mb-8 leading-relaxed text-white/90">
               Building Your Dreams into Reality
             </p>
-            
-            {/* Description with Depth */}
-            <p 
-              className="text-lg mb-8 text-white/90 animate-fade-in transform-3d"
-              style={{
-                animationDelay: "0.4s",
-                transform: "perspective(1000px) translateZ(5px)",
-              }}
-            >
+
+            <p className="text-lg mb-8 text-white/80">
               {company.description}
             </p>
-            
-            {/* CTA Buttons with 3D Hover Effect */}
-            <div 
-              className="flex flex-wrap gap-4 justify-center animate-fade-in transform-3d"
-              style={{
-                animationDelay: "0.6s",
-                transform: "perspective(1000px) translateZ(25px)",
-              }}
-            >
+
+            <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/projects">
-                <Button 
-                  size="lg" 
-                  variant="secondary" 
-                  className="text-lg hover:scale-110 transition-all shadow-xl transform-3d group"
-                  style={{
-                    transform: "perspective(1000px) translateZ(0px)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "perspective(1000px) translateZ(30px) rotateY(5deg)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "perspective(1000px) translateZ(0px) rotateY(0deg)";
-                  }}
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="text-lg hover:scale-110 transition-all shadow-xl"
                 >
                   View Our Projects
                 </Button>
               </Link>
               <Link to="/contact">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-110 transition-all text-violet-950 transform-3d group"
-                  style={{
-                    transform: "perspective(1000px) translateZ(0px)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "perspective(1000px) translateZ(30px) rotateY(-5deg)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "perspective(1000px) translateZ(0px) rotateY(0deg)";
-                  }}
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-110 transition-all text-violet-950"
                 >
                   Contact Us
                 </Button>

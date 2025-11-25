@@ -7,6 +7,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "./config";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -22,6 +24,27 @@ export interface UserProfile {
   createdAt: any;
   updatedAt: any;
 }
+
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: "select_account",
+});
+
+const ensureUserProfile = async (user: User, role: UserRole = "admin"): Promise<UserProfile> => {
+  const existingProfile = await getUserProfile(user.uid);
+  if (existingProfile) return existingProfile;
+
+  const profile: UserProfile = {
+    uid: user.uid,
+    email: user.email || "",
+    displayName: user.displayName || user.email || "Admin User",
+    role,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  };
+  await setDoc(doc(db, "users", user.uid), profile);
+  return profile;
+};
 
 // Sign in with email and password
 export const signIn = async (email: string, password: string) => {
@@ -39,6 +62,18 @@ export const signIn = async (email: string, password: string) => {
     return { user, profile: userProfile };
   } catch (error: any) {
     throw new Error(error.message || "Failed to sign in");
+  }
+};
+
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    const userProfile = await ensureUserProfile(user, "admin");
+    return { user, profile: userProfile };
+  } catch (error: any) {
+    console.error("Google sign-in failed", error);
+    throw new Error(error.message || "Failed to sign in with Google");
   }
 };
 

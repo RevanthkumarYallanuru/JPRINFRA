@@ -2,16 +2,15 @@
 // Update all company information from this single file
 
 export const siteData = {
-  // Company Information
   company: {
     name: "JPR INFRAWORKS",
     tagline: "BUILDING EXCELLENCE",
-    description: "Building excellence with precision, quality, and dedication. Your trusted partner in construction and infrastructure development.",
-    fullDescription: "JPR INFRAWORKS is a leading construction and infrastructure development company dedicated to delivering exceptional quality and innovative solutions. With years of experience in the industry, we have established ourselves as a trusted name in residential, commercial, and infrastructure projects.",
+    description:
+      "Building excellence with precision, quality, and dedication. Your trusted partner in construction and infrastructure development.",
+    fullDescription:
+      "JPR INFRAWORKS is a leading construction and infrastructure development company dedicated to delivering exceptional quality and innovative solutions. With years of experience in the industry, we have established ourselves as a trusted name in residential, commercial, and infrastructure projects.",
     logo: "/logo.jpg",
   },
-
-  // Contact Information
   contact: {
     email: "contact@jprinfraworks.com",
     emailSecondary: "info@jprinfraworks.com",
@@ -27,15 +26,11 @@ export const siteData = {
       saturday: "Saturday: 9:00 AM - 2:00 PM",
     },
   },
-
-  // Social Media Links
   social: {
     facebook: "#",
     instagram: "#",
     linkedin: "#",
   },
-
-  // Navigation Links
   navLinks: [
     { to: "/", label: "HOME" },
     { to: "/about", label: "ABOUT US" },
@@ -44,20 +39,21 @@ export const siteData = {
     { to: "/quotation", label: "QUOTATION" },
     { to: "/contact", label: "CONTACT" },
   ],
-
-  // Services
   services: [
     {
       title: "Residential Construction",
-      description: "Build dreams with us! We ensure precision, quality, and a personalized touch from foundation to rooftop.",
+      description:
+        "Build dreams with us! We ensure precision, quality, and a personalized touch from foundation to rooftop.",
     },
     {
       title: "Architectural Designs",
-      description: "Artistry in every blueprint! Each detail transforms into a masterpiece, shaping spaces with unparalleled excellence.",
+      description:
+        "Artistry in every blueprint! Each detail transforms into a masterpiece, shaping spaces with unparalleled excellence.",
     },
     {
       title: "Interior Designs",
-      description: "Home Interior Experts. Transforming Spaces with Expertise and Dedication for beautiful living environments.",
+      description:
+        "Home Interior Experts. Transforming Spaces with Expertise and Dedication for beautiful living environments.",
     },
     {
       title: "Commercial Projects",
@@ -68,8 +64,6 @@ export const siteData = {
       description: "Comprehensive infrastructure solutions for modern development needs.",
     },
   ],
-
-  // Footer Services List
   footerServices: [
     "Residential Construction",
     "Commercial Projects",
@@ -77,42 +71,27 @@ export const siteData = {
     "Architectural Design",
     "Interior Design",
   ],
-
-  // Company Values
   mission: {
     title: "Our Mission",
-    description: "To deliver world-class construction solutions that exceed client expectations through innovation, quality craftsmanship, and sustainable practices.",
+    description:
+      "To deliver world-class construction solutions that exceed client expectations through innovation, quality craftsmanship, and sustainable practices.",
   },
   vision: {
     title: "Our Vision",
-    description: "To be the most trusted and preferred construction company, setting new benchmarks in quality, innovation, and customer satisfaction.",
+    description:
+      "To be the most trusted and preferred construction company, setting new benchmarks in quality, innovation, and customer satisfaction.",
   },
   values: {
     title: "Our Values",
-    description: "Integrity, Excellence, Innovation, Safety, and Customer-First approach guide everything we do in our projects.",
+    description:
+      "Integrity, Excellence, Innovation, Safety, and Customer-First approach guide everything we do in our projects.",
   },
-
-  // Features/Why Choose Us
   features: [
-    {
-      title: "Quality Work",
-      description: "Premium quality in every project",
-    },
-    {
-      title: "Timely Delivery",
-      description: "On-time project completion",
-    },
-    {
-      title: "Expert Team",
-      description: "Skilled professionals",
-    },
-    {
-      title: "Satisfaction",
-      description: "100% client satisfaction",
-    },
+    { title: "Quality Work", description: "Premium quality in every project" },
+    { title: "Timely Delivery", description: "On-time project completion" },
+    { title: "Expert Team", description: "Skilled professionals" },
+    { title: "Satisfaction", description: "100% client satisfaction" },
   ],
-
-  // Expertise Areas
   expertise: [
     "Residential Construction & Development",
     "Commercial & Industrial Projects",
@@ -120,8 +99,6 @@ export const siteData = {
     "Architectural & Interior Design",
     "Project Management & Consulting",
   ],
-
-  // Why We Stand Out
   standOut: [
     "15+ years of industry experience",
     "Highly skilled and certified team",
@@ -129,11 +106,10 @@ export const siteData = {
     "Commitment to safety and quality",
     "Transparent pricing and timelines",
   ],
-
-  // SEO/Meta Information
   seo: {
     title: "JPR INFRAWORKS - Building Excellence in Construction",
-    description: "Leading construction and infrastructure development company delivering exceptional quality and innovative solutions.",
+    description:
+      "Leading construction and infrastructure development company delivering exceptional quality and innovative solutions.",
     keywords: "construction, infrastructure, residential construction, commercial projects, architectural design",
   },
 };

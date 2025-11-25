@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Loader } from "@/components/Loader";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -24,9 +25,12 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProjects from "./pages/admin/Projects";
 import ProjectForm from "./pages/admin/ProjectForm";
 import ProjectTasks from "./pages/admin/ProjectTasks";
+import AdminSetup from "./pages/admin/Setup.tsx";
 
 // Initialize React Query client for data fetching
 const queryClient = new QueryClient();
+
+const enableAdminSetup = import.meta.env.VITE_ENABLE_ADMIN_SETUP === "true";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -36,6 +40,7 @@ const App = () => (
         <Sonner />
         <Loader />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             {/* Public Routes */}
             <Route
@@ -61,6 +66,9 @@ const App = () => (
             />
 
             {/* Admin Routes */}
+            {enableAdminSetup && (
+              <Route path="/admin/setup" element={<AdminSetup />} />
+            )}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route
               path="/admin/*"

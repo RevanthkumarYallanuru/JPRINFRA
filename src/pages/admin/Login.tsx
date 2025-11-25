@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { signIn } from "@/lib/firebase/auth";
+import { signIn, signInWithGoogle } from "@/lib/firebase/auth";
 import { Loader2 } from "lucide-react";
 
 export default function AdminLogin() {
@@ -31,6 +31,26 @@ export default function AdminLogin() {
       toast({
         title: "Error",
         description: error.message || "Failed to sign in",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+      toast({
+        title: "Success",
+        description: "Logged in with Google",
+      });
+      navigate("/admin/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
     } finally {
@@ -84,6 +104,16 @@ export default function AdminLogin() {
               )}
             </Button>
           </form>
+          <div className="my-4 text-center text-sm text-muted-foreground">or</div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
+            Continue with Google
+          </Button>
         </CardContent>
       </Card>
     </div>
