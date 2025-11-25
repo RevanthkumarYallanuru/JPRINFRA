@@ -90,12 +90,16 @@ export default function Quotation() {
                   <h2 className="text-2xl font-bold text-primary mb-6">Project Details</h2>
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="projectType">Project Type *</Label>
+                      <Label htmlFor="projectType" id="projectType-label">Project Type *</Label>
                       <Select value={formData.projectType} onValueChange={value => setFormData({
                       ...formData,
                       projectType: value
                     })}>
-                        <SelectTrigger className="hover:border-primary transition-colors">
+                        <SelectTrigger 
+                          id="projectType" 
+                          className="hover:border-primary transition-colors"
+                          aria-labelledby="projectType-label"
+                        >
                           <SelectValue placeholder="Select project type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -132,12 +136,16 @@ export default function Quotation() {
                     </div>
 
                     <div>
-                      <Label htmlFor="quality">Construction Quality *</Label>
+                      <Label htmlFor="quality" id="quality-label">Construction Quality *</Label>
                       <Select value={formData.quality} onValueChange={value => setFormData({
                       ...formData,
                       quality: value
                     })}>
-                        <SelectTrigger className="hover:border-primary transition-colors">
+                        <SelectTrigger 
+                          id="quality" 
+                          className="hover:border-primary transition-colors"
+                          aria-labelledby="quality-label"
+                        >
                           <SelectValue placeholder="Select quality level" />
                         </SelectTrigger>
                         <SelectContent>

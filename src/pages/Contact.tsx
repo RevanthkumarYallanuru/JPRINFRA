@@ -82,10 +82,11 @@ export default function Contact() {
                 <CardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">
                         Full Name *
                       </label>
                       <Input
+                        id="contact-name"
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -94,10 +95,11 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">
                         Email Address *
                       </label>
                       <Input
+                        id="contact-email"
                         type="email"
                         required
                         value={formData.email}
@@ -107,10 +109,11 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-phone" className="block text-sm font-medium text-foreground mb-2">
                         Phone Number *
                       </label>
                       <Input
+                        id="contact-phone"
                         type="tel"
                         required
                         value={formData.phone}
@@ -120,10 +123,11 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-subject" className="block text-sm font-medium text-foreground mb-2">
                         Subject *
                       </label>
                       <Input
+                        id="contact-subject"
                         required
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
@@ -132,10 +136,11 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">
                         Message *
                       </label>
                       <Textarea
+                        id="contact-message"
                         required
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}

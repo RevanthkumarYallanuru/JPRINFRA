@@ -1,4 +1,5 @@
 // Home page component with hero section, services, and features
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +9,8 @@ import { siteData } from "@/lib/data";
 
 export default function Home() {
   const { company, services: servicesData, features: featuresData } = siteData;
+  const heroRef = useRef<HTMLElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   // Icon mapping for services (first 3 services)
   const serviceIcons = [Building2, Ruler, PaintBucket];
@@ -22,37 +25,176 @@ export default function Home() {
     ...feature,
     icon: featureIcons[index],
   }));
+
+  // Mouse move handler for 3D parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+        setMousePosition({ x, y });
+      }
+    };
+
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener("mousemove", handleMouseMove);
+      return () => heroElement.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, []);
+
   return <div>
-      {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt={`${company.name} Construction`} className="w-full h-full object-cover" loading="eager" />
+      {/* Hero Section with 3D Animations */}
+      <section 
+        ref={heroRef}
+        className="relative py-32 overflow-hidden perspective-3d"
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Background Image with 3D Parallax */}
+        <div 
+          className="absolute inset-0 transform-3d"
+          style={{
+            transform: `perspective(1000px) translateZ(${mousePosition.x * 0.5}px) rotateY(${mousePosition.x * 0.1}deg) rotateX(${-mousePosition.y * 0.1}deg)`,
+            transition: "transform 0.1s ease-out",
+          }}
+        >
+          <img 
+            src={heroImage} 
+            alt={`${company.name} Construction`} 
+            className="w-full h-full object-cover animate-parallax-3d" 
+            loading="eager"
+            style={{
+              transform: "scale(1.1)",
+            }}
+          />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-primary/40 to-black/70"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">{company.name}</h1>
-            <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
-            <p className="text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in" style={{
-            animationDelay: "0.2s"
-          }}>
+        
+        {/* Gradient Overlay with Depth */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-black/60 via-primary/40 to-black/70 transform-3d"
+          style={{
+            transform: `translateZ(10px)`,
+          }}
+        />
+
+        {/* Floating 3D Decorative Elements */}
+        <div 
+          className="absolute top-20 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-xl animate-float-3d transform-3d"
+          style={{
+            transform: `translateZ(50px)`,
+            animationDelay: "0s",
+          }}
+        />
+        <div 
+          className="absolute bottom-20 right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl animate-float-3d transform-3d"
+          style={{
+            transform: `translateZ(30px)`,
+            animationDelay: "2s",
+          }}
+        />
+        <div 
+          className="absolute top-1/2 right-20 w-24 h-24 bg-secondary/30 rounded-full blur-lg animate-depth-pulse transform-3d"
+          style={{
+            transform: `translateZ(40px)`,
+            animationDelay: "1s",
+          }}
+        />
+
+        {/* Main Content with 3D Transform */}
+        <div className="container mx-auto px-4 relative z-10 transform-3d">
+          <div 
+            className="max-w-4xl mx-auto text-center text-white"
+            style={{
+              transform: `perspective(1000px) translateZ(${mousePosition.y * 0.3}px) rotateX(${-mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * 0.05}deg)`,
+              transition: "transform 0.1s ease-out",
+            }}
+          >
+            {/* Company Name with 3D Glow Effect */}
+            <h1 
+              className="text-5xl md:text-7xl font-bold mb-6 animate-slide-in-3d animate-glow-3d"
+              style={{
+                textShadow: "0 0 30px rgba(43, 96%, 56%, 0.5), 0 0 60px rgba(43, 96%, 56%, 0.3)",
+                transform: "perspective(1000px) translateZ(20px)",
+              }}
+            >
+              {company.name}
+            </h1>
+            
+            {/* Decorative Line with 3D Effect */}
+            <div 
+              className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in transform-3d"
+              style={{
+                transform: "perspective(1000px) translateZ(15px) rotateX(45deg)",
+                boxShadow: "0 0 20px rgba(43, 96%, 56%, 0.6)",
+              }}
+            />
+            
+            {/* Tagline with Floating Animation */}
+            <p 
+              className="text-xl md:text-2xl mb-8 leading-relaxed animate-float-3d transform-3d"
+              style={{
+                animationDelay: "0.2s",
+                transform: "perspective(1000px) translateZ(10px)",
+              }}
+            >
               Building Your Dreams into Reality
             </p>
-            <p className="text-lg mb-8 text-white/90 animate-fade-in" style={{
-            animationDelay: "0.4s"
-          }}>
+            
+            {/* Description with Depth */}
+            <p 
+              className="text-lg mb-8 text-white/90 animate-fade-in transform-3d"
+              style={{
+                animationDelay: "0.4s",
+                transform: "perspective(1000px) translateZ(5px)",
+              }}
+            >
               {company.description}
             </p>
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{
-            animationDelay: "0.6s"
-          }}>
+            
+            {/* CTA Buttons with 3D Hover Effect */}
+            <div 
+              className="flex flex-wrap gap-4 justify-center animate-fade-in transform-3d"
+              style={{
+                animationDelay: "0.6s",
+                transform: "perspective(1000px) translateZ(25px)",
+              }}
+            >
               <Link to="/projects">
-                <Button size="lg" variant="secondary" className="text-lg hover:scale-105 transition-transform shadow-xl">
+                <Button 
+                  size="lg" 
+                  variant="secondary" 
+                  className="text-lg hover:scale-110 transition-all shadow-xl transform-3d group"
+                  style={{
+                    transform: "perspective(1000px) translateZ(0px)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "perspective(1000px) translateZ(30px) rotateY(5deg)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "perspective(1000px) translateZ(0px) rotateY(0deg)";
+                  }}
+                >
                   View Our Projects
                 </Button>
               </Link>
               <Link to="/contact">
-                <Button size="lg" variant="outline" className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-105 transition-all text-violet-950">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg border-2 border-white hover:bg-white shadow-xl hover:scale-110 transition-all text-violet-950 transform-3d group"
+                  style={{
+                    transform: "perspective(1000px) translateZ(0px)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "perspective(1000px) translateZ(30px) rotateY(-5deg)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "perspective(1000px) translateZ(0px) rotateY(0deg)";
+                  }}
+                >
                   Contact Us
                 </Button>
               </Link>

@@ -1,0 +1,5 @@
+# Netlify redirects file - redirects all routes to index.html for SPA routing
+# This fixes 404 errors when navigating directly to routes or refreshing pages
+
+/*    /index.html   200
+

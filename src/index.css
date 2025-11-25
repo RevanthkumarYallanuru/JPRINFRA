@@ -104,3 +104,120 @@ All colors MUST be HSL. This file contains the CSS custom properties for the the
     @apply bg-background text-foreground;
   }
 }
+
+/* 3D Animation Keyframes */
+@keyframes float3d {
+  0%, 100% {
+    transform: translateY(0px) translateZ(0) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-20px) translateZ(20px) rotateX(5deg) rotateY(5deg);
+  }
+  50% {
+    transform: translateY(-10px) translateZ(10px) rotateX(-5deg) rotateY(-5deg);
+  }
+  75% {
+    transform: translateY(-15px) translateZ(15px) rotateX(3deg) rotateY(-3deg);
+  }
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateY(90deg) rotateX(10deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(180deg) rotateX(0deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateY(270deg) rotateX(-10deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(360deg) rotateX(0deg);
+  }
+}
+
+@keyframes parallax3d {
+  0% {
+    transform: perspective(1000px) translateZ(0px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(1000px) translateZ(50px) rotateY(5deg);
+  }
+  100% {
+    transform: perspective(1000px) translateZ(0px) rotateY(0deg);
+  }
+}
+
+@keyframes depth-pulse {
+  0%, 100% {
+    transform: perspective(1000px) translateZ(0px);
+    opacity: 1;
+  }
+  50% {
+    transform: perspective(1000px) translateZ(30px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-in-3d {
+  0% {
+    transform: perspective(1000px) translateX(-100px) translateZ(-200px) rotateY(45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(1000px) translateX(0) translateZ(0) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes glow-3d {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(43, 96%, 56%, 0.3),
+                0 0 40px rgba(43, 96%, 56%, 0.2),
+                0 0 60px rgba(43, 96%, 56%, 0.1);
+    transform: perspective(1000px) translateZ(0px);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(43, 96%, 56%, 0.5),
+                0 0 60px rgba(43, 96%, 56%, 0.3),
+                0 0 90px rgba(43, 96%, 56%, 0.2);
+    transform: perspective(1000px) translateZ(20px);
+  }
+}
+
+/* 3D Animation Classes */
+.animate-float-3d {
+  animation: float3d 6s ease-in-out infinite;
+}
+
+.animate-rotate-3d {
+  animation: rotate3d 20s linear infinite;
+}
+
+.animate-parallax-3d {
+  animation: parallax3d 8s ease-in-out infinite;
+}
+
+.animate-depth-pulse {
+  animation: depth-pulse 3s ease-in-out infinite;
+}
+
+.animate-slide-in-3d {
+  animation: slide-in-3d 1s ease-out forwards;
+}
+
+.animate-glow-3d {
+  animation: glow-3d 3s ease-in-out infinite;
+}
+
+.perspective-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.transform-3d {
+  transform-style: preserve-3d;
+}
