@@ -1,46 +1,85 @@
 // Project detail page component showing individual project information
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MapPin, Calendar, Ruler, ArrowLeft, CheckCircle } from "lucide-react";
+import { getProject, Project } from "@/lib/firebase/projects";
 
 export default function ProjectDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock project data (in real app, fetch based on id)
-  const project = {
-    id: 1,
-    title: "Modern Villa Construction",
-    location: "Bangalore, Karnataka",
-    status: "completed",
-    category: "Residential",
-    timeline: "12 Months (Jan 2023 - Dec 2023)",
-    area: "3500 sq ft",
-    description: "A luxurious modern villa featuring contemporary architecture, premium finishes, and state-of-the-art amenities. This project showcases our commitment to quality and attention to detail in residential construction.",
-    workScope: [
-      "Complete structural design and construction",
-      "High-end interior finishing and decoration",
-      "Landscaping and outdoor spaces",
-      "Smart home automation integration",
-      "Swimming pool and recreational areas",
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200",
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=1200",
-    ],
-    progress: 100,
-    tasks: [
-      { name: "Foundation & Structure", status: "completed" },
-      { name: "Roofing & Exterior", status: "completed" },
-      { name: "Plumbing & Electrical", status: "completed" },
-      { name: "Interior Finishing", status: "completed" },
-      { name: "Final Inspection", status: "completed" },
-    ],
+  useEffect(() => {
+    if (id) {
+      loadProject(id);
+    }
+  }, [id]);
+
+  const loadProject = async (projectId: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getProject(projectId);
+      if (data) {
+        setProject(data);
+      } else {
+        setError("Project not found");
+      }
+    } catch (err) {
+      console.error("Error loading project:", err);
+      setError("Failed to load project");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div>
+        <section className="py-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+          <div className="container mx-auto px-4">
+            <Skeleton className="h-10 w-32 mb-6" />
+            <Skeleton className="h-12 w-2/3 mb-4" />
+            <div className="flex gap-6 mt-6">
+              <Skeleton className="h-6 w-48" />
+              <Skeleton className="h-6 w-48" />
+              <Skeleton className="h-6 w-48" />
+            </div>
+          </div>
+        </section>
+        <section className="py-12 bg-background">
+          <div className="container mx-auto px-4">
+            <Skeleton className="h-96 w-full mb-8" />
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              <Skeleton className="h-24" />
+              <Skeleton className="h-24" />
+              <Skeleton className="h-24" />
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (error || !project) {
+    return (
+      <div className="py-20 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-lg text-muted-foreground mb-4">{error || "Project not found"}</p>
+          <Link to="/projects">
+            <Button>Back to Projects</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -84,23 +123,33 @@ export default function ProjectDetail() {
             <div className="lg:col-span-2 space-y-8">
               {/* Image Gallery */}
               <div className="space-y-4">
-                <img 
-                  src={project.images[0]} 
-                  alt={project.title}
-                  className="w-full h-[500px] object-cover rounded-lg shadow-lg"
-                  loading="eager"
-                />
-                <div className="grid grid-cols-3 gap-4">
-                  {project.images.slice(1).map((img, idx) => (
+                {project.images && project.images.length > 0 ? (
+                  <>
                     <img 
-                      key={idx}
-                      src={img} 
-                      alt={`${project.title} ${idx + 2}`}
-                      className="w-full h-32 object-cover rounded-lg hover:opacity-80 transition-opacity cursor-pointer"
-                      loading="lazy"
+                      src={project.images[0]} 
+                      alt={project.title}
+                      className="w-full h-[500px] object-cover rounded-lg shadow-lg"
+                      loading="eager"
                     />
-                  ))}
-                </div>
+                    {project.images.length > 1 && (
+                      <div className="grid grid-cols-3 gap-4">
+                        {project.images.slice(1).map((img, idx) => (
+                          <img 
+                            key={idx}
+                            src={img} 
+                            alt={`${project.title} ${idx + 2}`}
+                            className="w-full h-32 object-cover rounded-lg hover:opacity-80 transition-opacity cursor-pointer"
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="w-full h-[500px] bg-muted rounded-lg flex items-center justify-center">
+                    <p className="text-muted-foreground">No images available</p>
+                  </div>
+                )}
               </div>
 
               {/* Description */}
@@ -108,21 +157,6 @@ export default function ProjectDetail() {
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-bold text-foreground mb-4">Project Description</h2>
                   <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                </CardContent>
-              </Card>
-
-              {/* Work Scope */}
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold text-foreground mb-4">Work Scope</h2>
-                  <ul className="space-y-3">
-                    {project.workScope.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </CardContent>
               </Card>
             </div>
@@ -133,15 +167,15 @@ export default function ProjectDetail() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold text-foreground mb-4">Project Status</h3>
-                  <Badge className={`mb-4 ${project.status === 'completed' ? 'bg-green-500' : 'bg-blue-500'} text-white capitalize`}>
+                  <Badge className={`mb-4 ${project.status === 'completed' ? 'bg-green-500' : project.status === 'ongoing' ? 'bg-blue-500' : 'bg-yellow-500'} text-white capitalize`}>
                     {project.status}
                   </Badge>
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Progress</span>
-                      <span className="font-semibold text-foreground">{project.progress}%</span>
+                      <span className="font-semibold text-foreground">{project.progress || 0}%</span>
                     </div>
-                    <Progress value={project.progress} className="h-2" />
+                    <Progress value={project.progress || 0} className="h-2" />
                   </div>
                 </CardContent>
               </Card>
@@ -167,23 +201,6 @@ export default function ProjectDetail() {
                       <p className="text-sm text-muted-foreground mb-1">Category</p>
                       <p className="font-medium text-foreground">{project.category}</p>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Tasks Progress */}
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-4">Project Tasks</h3>
-                  <div className="space-y-3">
-                    {project.tasks.map((task, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
-                        <CheckCircle className={`w-5 h-5 ${task.status === 'completed' ? 'text-green-500' : 'text-muted'} flex-shrink-0`} />
-                        <span className={`text-sm ${task.status === 'completed' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                          {task.name}
-                        </span>
-                      </div>
-                    ))}
                   </div>
                 </CardContent>
               </Card>

@@ -36,17 +36,19 @@ export default function ProjectForm() {
 
   const [loading, setLoading] = useState(isEditMode);
   const [saving, setSaving] = useState(false);
-  const [projectId, setProjectId] = useState<string | undefined>(id);
 
   const [formData, setFormData] = useState({
+    name: "",
     title: "",
     description: "",
     location: "",
     category: "",
     status: "upcoming" as ProjectStatus,
     area: "",
+    squareFeet: 0,
     timeline: "",
     progress: 0,
+    percentage: 0,
     images: [] as string[],
   });
 
@@ -62,17 +64,19 @@ export default function ProjectForm() {
       const project = await getProject(projectId);
       if (project) {
         setFormData({
+          name: project.name || project.title,
           title: project.title,
           description: project.description,
           location: project.location,
           category: project.category,
           status: project.status,
           area: project.area,
+          squareFeet: project.squareFeet || parseInt(project.area) || 0,
           timeline: project.timeline,
           progress: project.progress || 0,
+          percentage: project.percentage || project.progress || 0,
           images: project.images || [],
         });
-        setProjectId(projectId);
       } else {
         toast({
           title: "Error",
@@ -97,36 +101,48 @@ export default function ProjectForm() {
     e.preventDefault();
     if (!user) return;
 
+    // Validate required fields
+    if (!formData.title || !formData.description || !formData.location) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSaving(true);
 
     try {
-      if (isEditMode && projectId) {
-        await updateProject(
-          projectId,
-          {
-            ...formData,
-            progress: Number(formData.progress),
-          },
-          user.uid
-        );
+      const projectData = {
+        name: formData.name || formData.title,
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        category: formData.category,
+        status: formData.status,
+        area: formData.area,
+        squareFeet: formData.squareFeet,
+        timeline: formData.timeline,
+        progress: Number(formData.progress),
+        percentage: Number(formData.percentage || formData.progress),
+        images: formData.images,
+      };
+
+      if (isEditMode && id) {
+        await updateProject(id, projectData, user.uid);
         toast({
           title: "Success",
           description: "Project updated successfully",
         });
+        navigate("/admin/projects");
       } else {
-        const newProjectId = await createProject(
-          {
-            ...formData,
-            progress: Number(formData.progress),
-          },
-          user.uid
-        );
-        setProjectId(newProjectId);
+        const newProjectId = await createProject(projectData, user.uid);
         toast({
           title: "Success",
           description: "Project created successfully",
         });
-        navigate(`/admin/projects/${newProjectId}/edit`);
+        navigate("/admin/projects");
       }
     } catch (error: any) {
       toast({
@@ -175,6 +191,18 @@ export default function ProjectForm() {
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Project Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  placeholder="Internal project name"
+                />
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="title">Project Title *</Label>
                 <Input
@@ -261,19 +289,23 @@ export default function ProjectForm() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="area">Area (sq ft) *</Label>
+                  <Label htmlFor="area">Area (sq ft)</Label>
                   <Input
                     id="area"
                     value={formData.area}
-                    onChange={(e) =>
-                      setFormData({ ...formData, area: e.target.value })
-                    }
-                    required
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData({
+                        ...formData,
+                        area: value,
+                        squareFeet: parseInt(value) || 0,
+                      });
+                    }}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="timeline">Timeline *</Label>
+                  <Label htmlFor="timeline">Timeline</Label>
                   <Input
                     id="timeline"
                     value={formData.timeline}
@@ -281,25 +313,26 @@ export default function ProjectForm() {
                       setFormData({ ...formData, timeline: e.target.value })
                     }
                     placeholder="e.g., 12 Months (Jan 2023 - Dec 2023)"
-                    required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="progress">Progress (%)</Label>
+                <Label htmlFor="progress">Progress (%) / Percentage</Label>
                 <Input
                   id="progress"
                   type="number"
                   min="0"
                   max="100"
                   value={formData.progress}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value) || 0;
                     setFormData({
                       ...formData,
-                      progress: parseInt(e.target.value) || 0,
-                    })
-                  }
+                      progress: value,
+                      percentage: value,
+                    });
+                  }}
                 />
               </div>
             </CardContent>
@@ -311,7 +344,6 @@ export default function ProjectForm() {
             </CardHeader>
             <CardContent>
               <ImageUpload
-                projectId={projectId}
                 existingImages={formData.images}
                 onImagesChange={(images) =>
                   setFormData({ ...formData, images })

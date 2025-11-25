@@ -1,72 +1,39 @@
 // Projects page component displaying company portfolio
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import heroImage from "@/assets/hero-projects.jpg";
 import { siteData } from "@/lib/data";
+import { getProjects, Project } from "@/lib/firebase/projects";
 
 export default function Projects() {
   const { company } = siteData;
   const [filter, setFilter] = useState("all");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Modern Villa Construction",
-      location: "Bangalore, Karnataka",
-      status: "completed",
-      category: "Residential",
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800",
-      description: "Luxury villa with modern architecture and premium finishes",
-    },
-    {
-      id: 2,
-      title: "Commercial Complex",
-      location: "Mumbai, Maharashtra",
-      status: "ongoing",
-      category: "Commercial",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800",
-      description: "Multi-story commercial building with retail and office spaces",
-    },
-    {
-      id: 3,
-      title: "Residential Apartment",
-      location: "Chennai, Tamil Nadu",
-      status: "completed",
-      category: "Residential",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
-      description: "20-unit apartment complex with modern amenities",
-    },
-    {
-      id: 4,
-      title: "Highway Bridge Project",
-      location: "Pune, Maharashtra",
-      status: "ongoing",
-      category: "Infrastructure",
-      image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800",
-      description: "Infrastructure development for highway connectivity",
-    },
-    {
-      id: 5,
-      title: "Luxury Bungalow",
-      location: "Hyderabad, Telangana",
-      status: "upcoming",
-      category: "Residential",
-      image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=800",
-      description: "High-end residential bungalow with premium features",
-    },
-    {
-      id: 6,
-      title: "Office Tower",
-      location: "Bangalore, Karnataka",
-      status: "completed",
-      category: "Commercial",
-      image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=800",
-      description: "15-floor office building with state-of-the-art facilities",
-    },
-  ];
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getProjects();
+      setProjects(data);
+    } catch (err) {
+      console.error("Error loading projects:", err);
+      setError("Failed to load projects");
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProjects = filter === "all" 
     ? projects 
@@ -105,7 +72,7 @@ export default function Projects() {
       </section>
 
       {/* Filter Section */}
-      <section className="py-8 bg-background border-b border-border sticky top-0 z-30 backdrop-blur-sm bg-background/95">
+      <section className="py-8 bg-background/95 border-b border-border sticky top-0 z-30 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4">
             <Button
@@ -139,36 +106,59 @@ export default function Projects() {
       {/* Projects Grid */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <Link to={`/projects/${project.id}`} key={project.id}>
-                <Card className="group hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 overflow-hidden animate-slide-up border-2 hover:border-primary" style={{ animationDelay: `${index * 50}ms` }}>
-                  <div className="relative h-64 overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 right-4">
-                      <Badge className={`${getStatusColor(project.status)} text-white capitalize shadow-lg`}>
-                        {project.status}
-                      </Badge>
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <Badge variant="outline" className="mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">{project.category}</Badge>
-                    <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-3">{project.location}</p>
-                    <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Card key={i}>
+                  <CardContent className="p-0">
+                    <Skeleton className="w-full h-64" />
                   </CardContent>
                 </Card>
-              </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <Button onClick={loadProjects} variant="outline">
+                Try Again
+              </Button>
+            </div>
+          ) : filteredProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map((project, index) => (
+                <Link to={`/projects/${project.id}`} key={project.id}>
+                  <Card className="group hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 overflow-hidden animate-slide-up border-2 hover:border-primary" style={{ animationDelay: `${index * 50}ms` }}>
+                    <div className="relative h-64 overflow-hidden">
+                      <img 
+                        src={project.images && project.images[0] ? project.images[0] : "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800"}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute top-4 right-4">
+                        <Badge className={`${getStatusColor(project.status)} text-white capitalize shadow-lg`}>
+                          {project.status}
+                        </Badge>
+                      </div>
+                    </div>
+                    <CardContent className="p-6">
+                      <Badge variant="outline" className="mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">{project.category}</Badge>
+                      <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">{project.location}</p>
+                      <p className="text-muted-foreground leading-relaxed line-clamp-2">{project.description}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No projects found</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

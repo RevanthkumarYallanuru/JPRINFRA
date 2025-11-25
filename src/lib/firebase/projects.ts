@@ -14,22 +14,24 @@ import {
   serverTimestamp,
   QueryConstraint,
 } from "firebase/firestore";
-import { db, storage } from "./config";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { db } from "./config";
 
 export type ProjectStatus = "upcoming" | "ongoing" | "completed" | "on-hold";
 
 export interface Project {
   id?: string;
+  name: string;
   title: string;
   description: string;
   location: string;
   category: string;
   status: ProjectStatus;
   area: string;
+  squareFeet: number;
   timeline: string;
   images: string[];
   progress: number;
+  percentage?: number;
   createdAt: any;
   updatedAt: any;
   createdBy: string;
@@ -113,7 +115,9 @@ export const createProject = async (
   try {
     const projectData: Omit<Project, "id"> = {
       ...project,
-      progress: 0,
+      squareFeet: project.squareFeet || 0,
+      percentage: project.percentage || project.progress || 0,
+      progress: project.progress || 0,
       images: project.images || [],
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -137,11 +141,18 @@ export const updateProject = async (
 ): Promise<void> => {
   try {
     const docRef = doc(db, "projects", projectId);
-    await updateDoc(docRef, {
+    const updateData: any = {
       ...updates,
       updatedAt: serverTimestamp(),
       updatedBy: userId,
-    });
+    };
+    
+    // Sync percentage with progress
+    if (updates.progress !== undefined) {
+      updateData.percentage = updates.progress;
+    }
+    
+    await updateDoc(docRef, updateData);
   } catch (error) {
     console.error("Error updating project:", error);
     throw error;
@@ -151,19 +162,6 @@ export const updateProject = async (
 // Delete project
 export const deleteProject = async (projectId: string): Promise<void> => {
   try {
-    // Delete associated images from Storage
-    const project = await getProject(projectId);
-    if (project?.images) {
-      for (const imageUrl of project.images) {
-        try {
-          const imageRef = ref(storage, imageUrl);
-          await deleteObject(imageRef);
-        } catch (error) {
-          console.warn("Error deleting image:", error);
-        }
-      }
-    }
-    
     // Delete project tasks
     const tasks = await getProjectTasks(projectId);
     for (const task of tasks) {
@@ -176,37 +174,6 @@ export const deleteProject = async (projectId: string): Promise<void> => {
     await deleteDoc(doc(db, "projects", projectId));
   } catch (error) {
     console.error("Error deleting project:", error);
-    throw error;
-  }
-};
-
-// Upload project image
-export const uploadProjectImage = async (
-  file: File,
-  projectId: string
-): Promise<string> => {
-  try {
-    const timestamp = Date.now();
-    const fileName = `projects/${projectId}/${timestamp}_${file.name}`;
-    const storageRef = ref(storage, fileName);
-    
-    await uploadBytes(storageRef, file);
-    const downloadURL = await getDownloadURL(storageRef);
-    
-    return downloadURL;
-  } catch (error) {
-    console.error("Error uploading image:", error);
-    throw error;
-  }
-};
-
-// Delete project image
-export const deleteProjectImage = async (imageUrl: string): Promise<void> => {
-  try {
-    const imageRef = ref(storage, imageUrl);
-    await deleteObject(imageRef);
-  } catch (error) {
-    console.error("Error deleting image:", error);
     throw error;
   }
 };
@@ -323,4 +290,3 @@ export const addTaskNote = async (
     throw error;
   }
 };
-

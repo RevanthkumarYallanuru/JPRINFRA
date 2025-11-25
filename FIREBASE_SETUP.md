@@ -100,13 +100,16 @@ firebase deploy --only firestore:rules
 ```
 
 **Rule Summary:**
-- Users can read their own profile
-- Only admins can create/update/delete users
+- Users can read and create their own profile (for first-time signup)
+- Users can update their own profile (but cannot change role)
+- Only admins can delete users or modify other users' profiles
 - All authenticated users can read projects
 - Only managers and admins can create/update projects
 - Only admins can delete projects
 - All authenticated users can read tasks
 - Only managers and admins can create/update/delete tasks
+- Public can create contact leads and quotation requests (no auth required)
+- Only authenticated admins can read contact leads and quotation requests
 
 ---
 
@@ -141,18 +144,26 @@ firebase deploy --only storage
 
 ### Authentication Methods
 
-The application uses **Email/Password** authentication.
+The application uses **Email/Password** and **Google Sign-In** authentication.
 
 **To enable:**
 1. Go to Firebase Console
 2. Navigate to "Authentication" > "Sign-in method"
 3. Enable "Email/Password" provider
-4. Click "Save"
+4. Enable "Google" provider (optional but recommended)
+   - Add your authorized domains (localhost, your production domain)
+5. Click "Save"
 
 ### Initial Admin User Setup
 
-After setting up Firebase, you'll need to create an admin user:
+**Option 1: Self-Registration (Recommended)**
+1. Visit `/admin/login` in your application
+2. Click the "Sign Up" tab
+3. Fill in email, password, and display name
+4. Click "Create Admin Account"
+5. You'll be automatically signed in and redirected to the dashboard
 
+**Option 2: Manual Setup (Alternative)**
 1. **Create user in Firebase Authentication:**
    - Go to "Authentication" > "Users"
    - Click "Add user"
