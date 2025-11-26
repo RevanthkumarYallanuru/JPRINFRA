@@ -40,8 +40,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Loader />
-        <ScrollAnimator />
         <BrowserRouter>
+          <ScrollAnimator />
           <ScrollToTop />
           <Routes>
             {/* Public Routes */}
