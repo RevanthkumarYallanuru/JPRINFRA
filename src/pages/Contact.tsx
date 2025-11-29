@@ -9,6 +9,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-contact.jpg";
 import { siteData } from "@/lib/data";
 import { saveContactLead } from "@/lib/firebase/leads";
+import { SEO } from "@/components/SEO";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -62,20 +63,44 @@ export default function Contact() {
     },
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "JPR INFRAWORKS",
+      "telephone": contact.phone,
+      "email": contact.email,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": contact.address.line1,
+        "addressLocality": "Building City",
+        "addressCountry": "IN"
+      }
+    }
+  };
+
   return (
     <div>
+      <SEO
+        title="Contact JPR INFRAWORKS - Construction Company | Get Free Quotation"
+        description="Contact JPR INFRAWORKS construction company for construction project inquiries, free quotations, and consultations. Get in touch with our builder and architect team for residential construction, commercial projects, and infrastructure development."
+        keywords="contact construction company, construction company contact, builder contact, architect contact, construction quotation, construction consultation, construction company phone, construction company email"
+        url="https://jprinfraworks.com/contact"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt={`Contact ${company.name}`} className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt="Contact JPR INFRAWORKS Construction Company - Get Free Quotation and Construction Consultation" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Contact {company.name}</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Contact {company.name} - Construction Company</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
-              Get in touch with us for any inquiries or project consultations
+              Get in touch with our construction company for any construction project inquiries, free quotations, or consultations. Contact our builder and architect team for residential construction, commercial projects, and infrastructure development.
             </p>
           </div>
         </div>

@@ -3,14 +3,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Award, Users } from "lucide-react";
 import heroImage from "@/assets/hero-about.jpg";
 import { siteData } from "@/lib/data";
+import { SEO } from "@/components/SEO";
 
 export default function About() {
   const { company, mission, vision, values, expertise, standOut } = siteData;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "JPR INFRAWORKS",
+      "description": "Premier construction company, builder, and architect firm with over 15 years of experience in residential construction, commercial projects, and infrastructure development."
+    }
+  };
+
   return <div>
+      <SEO
+        title="About JPR INFRAWORKS - Construction Company, Builder & Architect | jprinfraworks.com"
+        description="Learn about JPR INFRAWORKS, a premier construction company and builder with over 15 years of experience. Our team of skilled architects and construction professionals delivers exceptional quality in residential construction, commercial projects, and infrastructure development."
+        keywords="about construction company, about builder, construction company history, builder experience, architect firm, construction team, construction expertise, construction company India"
+        url="https://jprinfraworks.com/about"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="About JPR INFRAWORKS" className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt="About JPR INFRAWORKS - Construction Company, Builder and Architect Firm with 15+ Years Experience" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="hero-motion-overlay">
@@ -19,10 +37,10 @@ export default function About() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About {company.name}</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About {company.name} - Construction Company & Builder</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
-              Building excellence with precision, quality, and dedication since our inception
+              Building excellence with precision, quality, and dedication. Premier construction company, builder, and architect firm with over 15 years of experience in construction and infrastructure development.
             </p>
           </div>
         </div>
@@ -32,16 +50,16 @@ export default function About() {
       <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-primary mb-6 text-center">Who We Are</h2>
+            <h2 className="text-4xl font-bold text-primary mb-6 text-center">Who We Are - Construction Company & Builder</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="mb-4 leading-relaxed">
                 {company.fullDescription}
               </p>
               <p className="mb-4 leading-relaxed">
-                Our team of skilled professionals combines technical expertise with creative vision to transform your dreams into reality. We take pride in our commitment to excellence, timely delivery, and customer satisfaction.
+                Our team of skilled construction professionals, experienced architects, and expert builders combines technical expertise with creative vision to transform your construction dreams into reality. As a leading construction company, we take pride in our commitment to excellence, timely project completion, and customer satisfaction in every residential construction, commercial building, and infrastructure development project.
               </p>
               <p className="leading-relaxed">
-                From architectural design to project completion, we handle every aspect with meticulous attention to detail, ensuring that each project meets the highest standards of quality and safety.
+                From architectural design and planning to construction project completion, our construction company handles every aspect with meticulous attention to detail. Our builder team ensures that each construction project meets the highest standards of quality, safety, and construction excellence. Whether you need a builder for residential construction, an architect for commercial projects, or construction services for infrastructure development, JPR INFRAWORKS is your trusted construction partner.
               </p>
             </div>
           </div>
@@ -99,7 +117,7 @@ export default function About() {
       <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-primary mb-8 text-center">Experience & Expertise</h2>
+            <h2 className="text-4xl font-bold text-primary mb-8 text-center">Construction Experience & Expertise</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-2xl font-semibold text-foreground mb-4">Our Expertise</h3>
@@ -135,7 +153,7 @@ export default function About() {
             <Users className="w-16 h-16 mx-auto mb-6 text-white animate-float" />
             <h2 className="text-4xl font-bold mb-6">Our Team</h2>
             <p className="text-xl leading-relaxed">
-              Our success is driven by a dedicated team of professionals including experienced architects, skilled engineers, project managers, and craftsmen who are passionate about delivering excellence in every project.
+              Our construction company's success is driven by a dedicated team of professionals including experienced architects, skilled construction engineers, project managers, and expert builders who are passionate about delivering construction excellence in every residential construction, commercial building, and infrastructure development project.
             </p>
           </div>
         </div>

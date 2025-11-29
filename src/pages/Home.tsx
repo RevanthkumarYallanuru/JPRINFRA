@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Ruler, PaintBucket, CheckCircle, Users, Award, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
 import { siteData } from "@/lib/data";
+import { SEO } from "@/components/SEO";
 
 export default function Home() {
   const { company, services: servicesData, features: featuresData } = siteData;
@@ -59,7 +60,31 @@ export default function Home() {
     };
   }, []);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "JPR INFRAWORKS",
+    "description": "Premier construction company, builder, and architect firm providing residential construction, commercial projects, infrastructure development, and architectural design services.",
+    "url": "https://jprinfraworks.com",
+    "telephone": "+91-98765-43210",
+    "email": "contact@jprinfraworks.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Construction Avenue",
+      "addressLocality": "Building City",
+      "addressCountry": "IN"
+    },
+    "areaServed": "India",
+    "serviceType": ["Construction", "Architecture", "Interior Design", "Infrastructure Development"]
+  };
+
   return <div>
+      <SEO
+        title="JPR INFRAWORKS - Leading Construction Company | Builder & Architect Portfolio | jprinfraworks.com"
+        description="JPR INFRAWORKS is a premier construction company, builder, and architect firm specializing in residential construction, commercial projects, infrastructure development, and architectural design. View our construction portfolio and get a free quotation for your project."
+        keywords="construction company, builder, architect, construction services, residential construction, commercial construction, infrastructure development, architectural design, construction portfolio, building contractor, construction firm, home builder, construction projects, jprinfraworks"
+        structuredData={structuredData}
+      />
       {/* Hero Section with custom 3D cursor */}
       <section
         ref={heroRef}
@@ -68,7 +93,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt={`${company.name} Construction`}
+            alt="JPR INFRAWORKS - Premier Construction Company, Builder and Architect Portfolio - Residential Construction, Commercial Projects, Infrastructure Development"
             className="w-full h-full object-cover scale-105"
             loading="eager"
           />
@@ -120,17 +145,17 @@ export default function Home() {
             }}
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
-              {company.name}
+              {company.name} - Premier Construction Company & Builder
             </h1>
 
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 shadow-[0_0_20px_rgba(226,232,240,0.6)]" />
 
             <p className="text-xl md:text-2xl mb-8 leading-relaxed text-white/90">
-              Building Your Dreams into Reality
+              Building Your Dreams into Reality - Expert Builders & Architects
             </p>
 
             <p className="text-lg mb-8 text-white/80">
-              {company.description}
+              {company.description} As a leading construction company and builder, we specialize in residential construction, commercial projects, architectural design, and infrastructure development. Our team of skilled architects and construction professionals delivers exceptional quality and innovative construction solutions.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
@@ -161,10 +186,10 @@ export default function Home() {
       <section className="py-20 bg-muted scroll-animate">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Our Services</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Our Construction Services</h2>
             <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Comprehensive construction and infrastructure solutions tailored to your needs
+              Comprehensive construction and infrastructure solutions tailored to your needs. From residential construction and commercial building to architectural design and infrastructure development, our construction company provides expert builder and architect services.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -189,10 +214,10 @@ export default function Home() {
       <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Why Choose Us</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Why Choose Our Construction Company</h2>
             <div className="h-1 w-24 bg-primary mx-auto mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              We deliver excellence through our commitment to quality and customer satisfaction
+              As a trusted builder and construction company, we deliver excellence through our commitment to quality construction, timely project completion, and customer satisfaction. Our experienced architects and construction team ensure every project meets the highest standards.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -214,10 +239,10 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary scroll-animate bg-slate-950 text-slate-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">Ready to Start Your Project?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">Ready to Start Your Construction Project?</h2>
           <div className="h-1 w-32 bg-white mx-auto mb-6 animate-scale-in"></div>
           <p className="text-xl mb-8 max-w-2xl mx-auto animate-fade-in">
-            Get in touch with us today for a free consultation and quotation
+            Get in touch with our construction company today for a free consultation and quotation. Whether you need a builder for residential construction, an architect for commercial projects, or construction services for infrastructure development, we're here to help.
           </p>
           <div className="flex flex-wrap gap-4 justify-center animate-fade-in">
             <Link to="/quotation">

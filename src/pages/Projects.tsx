@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import heroImage from "@/assets/hero-projects.jpg";
 import { siteData } from "@/lib/data";
 import { getProjects, Project } from "@/lib/firebase/projects";
+import { SEO } from "@/components/SEO";
 
 export default function Projects() {
   const { company } = siteData;
@@ -52,12 +53,26 @@ export default function Projects() {
     }
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Construction Projects Portfolio - JPR INFRAWORKS",
+    "description": "View our portfolio of completed and ongoing construction projects including residential construction, commercial buildings, and infrastructure development projects."
+  };
+
   return (
     <div>
+      <SEO
+        title="Construction Projects Portfolio - Residential & Commercial | JPR INFRAWORKS"
+        description="Explore our construction projects portfolio featuring completed and ongoing residential construction, commercial building, and infrastructure development projects. View our builder and architect work showcase."
+        keywords="construction projects, construction portfolio, residential construction projects, commercial construction projects, builder portfolio, architect portfolio, completed construction projects, construction company projects, infrastructure projects"
+        url="https://jprinfraworks.com/projects"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt={`${company.name} Projects`} className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt="JPR INFRAWORKS Construction Projects Portfolio - Completed Residential Construction, Commercial Building and Infrastructure Development Projects" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="hero-motion-overlay">
@@ -66,10 +81,10 @@ export default function Projects() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Projects</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Construction Projects Portfolio</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
-              Explore our portfolio of successfully delivered and ongoing construction projects
+              Explore our construction portfolio featuring successfully delivered and ongoing residential construction, commercial building, and infrastructure development projects by our expert builder and architect team.
             </p>
           </div>
         </div>
@@ -135,7 +150,7 @@ export default function Projects() {
                     <div className="relative h-64 overflow-hidden">
                       <img 
                         src={project.images && project.images[0] ? project.images[0] : "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800"}
-                        alt={project.title}
+                        alt={`${project.title} - ${project.category} Construction Project by JPR INFRAWORKS Builder and Architect`}
                         className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
                         loading="lazy"
                       />

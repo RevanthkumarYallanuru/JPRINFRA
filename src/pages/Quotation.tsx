@@ -10,6 +10,7 @@ import heroImage from "@/assets/hero-quotation.jpg";
 import { useToast } from "@/hooks/use-toast";
 import { siteData } from "@/lib/data";
 import { saveQuotationRequest } from "@/lib/firebase/leads";
+import { SEO } from "@/components/SEO";
 
 export default function Quotation() {
   const { toast } = useToast();
@@ -88,19 +89,37 @@ export default function Quotation() {
       maximumFractionDigits: 0
     }).format(value);
   };
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Construction Quotation Service",
+    "provider": {
+      "@type": "Organization",
+      "name": "JPR INFRAWORKS"
+    },
+    "description": "Get free construction project quotation and cost estimation for residential construction, commercial building, and infrastructure development projects."
+  };
+
   return <div>
+      <SEO
+        title="Free Construction Quotation & Cost Estimation | JPR INFRAWORKS"
+        description="Get a free construction quotation and cost estimation for your residential construction, commercial building, or infrastructure development project. Calculate approximate construction costs with our online quotation calculator."
+        keywords="construction quotation, construction cost estimation, free construction quote, construction project cost, builder quotation, construction company quotation, residential construction cost, commercial construction cost, construction estimate calculator"
+        url="https://jprinfraworks.com/quotation"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt={`${company.name} Quotation`} className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt="Construction Quotation Calculator - JPR INFRAWORKS Construction Company" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Get Free Quotation</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Get Free Construction Quotation</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
-              Calculate an approximate cost for your construction project
+              Calculate an approximate cost for your construction project. Get free quotation for residential construction, commercial building, and infrastructure development projects.
             </p>
           </div>
         </div>

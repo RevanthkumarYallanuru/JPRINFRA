@@ -16,7 +16,7 @@ export const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <img 
                 src={logo} 
-                alt={company.name} 
+                alt={`${company.name} - Construction Company, Builder and Architect Logo`}
                 className="h-12 w-12 object-contain rounded-lg"
               />
               <div>

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Home, Ruler, PaintBucket, Hammer, Building } from "lucide-react";
 import heroImage from "@/assets/hero-services.jpg";
 import { siteData } from "@/lib/data";
+import { SEO } from "@/components/SEO";
 
 export default function Services() {
   const { company } = siteData;
@@ -45,12 +46,43 @@ export default function Services() {
     },
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Construction Services",
+    "provider": {
+      "@type": "Organization",
+      "name": "JPR INFRAWORKS"
+    },
+    "areaServed": "India",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Construction Services",
+      "itemListElement": services.map((service, index) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": service.title,
+          "description": service.description
+        },
+        "position": index + 1
+      }))
+    }
+  };
+
   return (
     <div>
+      <SEO
+        title="Construction Services - Residential, Commercial & Infrastructure | JPR INFRAWORKS"
+        description="Comprehensive construction services by JPR INFRAWORKS: residential construction, commercial building, infrastructure development, architectural design, interior design, and project management. Expert builder and architect services."
+        keywords="construction services, residential construction services, commercial construction services, infrastructure development services, architectural design services, interior design services, builder services, construction company services, construction project management"
+        url="https://jprinfraworks.com/services"
+        structuredData={structuredData}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt={`${company.name} Services`} className="w-full h-full object-cover" loading="lazy" />
+          <img src={heroImage} alt="JPR INFRAWORKS Construction Services - Residential Construction, Commercial Building, Infrastructure Development, Architectural Design" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/50 to-black/60"></div>
         <div className="hero-motion-overlay">
@@ -59,10 +91,10 @@ export default function Services() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Services</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Construction Services</h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
-              Comprehensive construction and infrastructure solutions for your every need
+              Comprehensive construction and infrastructure solutions for your every need. Expert builder and architect services for residential construction, commercial projects, and infrastructure development.
             </p>
           </div>
         </div>
@@ -103,7 +135,7 @@ export default function Services() {
       <section className="py-20 bg-muted/50 scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-primary text-center mb-12">Our Process</h2>
+            <h2 className="text-4xl font-bold text-primary text-center mb-12">Our Construction Process</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
                 { step: "01", title: "Consultation", desc: "Understanding your requirements" },
@@ -125,9 +157,9 @@ export default function Services() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary text-white scroll-animate">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Need Our Services?</h2>
+          <h2 className="text-4xl font-bold mb-6">Need Our Construction Services?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Let's discuss your project requirements and create something exceptional together.
+            Let's discuss your construction project requirements and create something exceptional together. Whether you need a builder for residential construction, an architect for commercial projects, or construction services for infrastructure development, our construction company is here to help.
           </p>
           <a href="/contact" className="inline-block bg-white text-primary px-8 py-4 rounded-md text-lg font-semibold hover:scale-110 transition-transform shadow-xl">
             GET A QUOTE

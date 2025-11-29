@@ -42,7 +42,7 @@ export const Header = () => {
           <Link to="/" className="flex items-center gap-3">
             <img 
               src={logo} 
-              alt={company.name} 
+              alt={`${company.name} - Construction Company, Builder and Architect Logo`}
               className="h-12 w-12 object-contain"
               loading="eager"
             />
