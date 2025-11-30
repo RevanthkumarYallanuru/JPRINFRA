@@ -1,6 +1,8 @@
 // About page component with company information and values
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Award, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getAchievements } from "@/lib/firebase/achievements";
 import heroImage from "@/assets/hero-about.jpg";
 import { siteData } from "@/lib/data";
 import { SEO } from "@/components/SEO";
@@ -16,6 +18,22 @@ export default function About() {
       "description": "Premier construction company, builder, and architect firm with over 15 years of experience in residential construction, commercial projects, and infrastructure development."
     }
   };
+
+  const [achievements, setAchievements] = useState<any[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const res = await getAchievements();
+        if (mounted) setAchievements(res);
+      } catch (err) {
+        // ignore
+      }
+    };
+    load();
+    return () => { mounted = false; };
+  }, []);
 
   return <div>
       <SEO
@@ -37,7 +55,7 @@ export default function About() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About {company.name} - Construction Company & Builder</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">About {company.name} </h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
               Building excellence with precision, quality, and dedication. Premier construction company, builder, and architect firm with over 15 years of experience in construction and infrastructure development.
@@ -50,7 +68,7 @@ export default function About() {
       <section className="py-20 bg-background scroll-animate">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-primary mb-6 text-center">Who We Are - Construction Company & Builder</h2>
+            <h2 className="text-4xl font-bold text-primary mb-6 text-center">Who We Are </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="mb-4 leading-relaxed">
                 {company.fullDescription}
@@ -66,6 +84,29 @@ export default function About() {
         </div>
       </section>
 
+      {/* Achievements Section 
+      <section className="py-20 bg-muted/50 scroll-animate">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-primary mb-8 text-center">Achievements & Awards</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {achievements.length === 0 ? (
+              <div className="text-center text-muted-foreground">No achievements to display yet.</div>
+            ) : (
+              achievements.map((a) => (
+                <Card key={a.id} className="overflow-hidden">
+                  <CardContent>
+                    {a.imageUrl && <img src={a.imageUrl} alt={a.title} className="w-full h-44 object-cover rounded-md mb-3" />}
+                    <h3 className="font-semibold text-lg">{a.title}</h3>
+                    {a.date && <p className="text-sm text-muted-foreground">{a.date}</p>}
+                    {a.description && <p className="mt-2 text-sm text-muted-foreground">{a.description}</p>}
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+      */}
       {/* Mission, Vision, Values */}
       <section className="py-20 bg-muted/50 scroll-animate">
         <div className="container mx-auto px-4">

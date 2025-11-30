@@ -81,7 +81,7 @@ export default function Projects() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Construction Projects Portfolio</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">Our Construction Projects </h1>
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 animate-scale-in"></div>
             <p className="text-xl md:text-2xl leading-relaxed">
               Explore our construction portfolio featuring successfully delivered and ongoing residential construction, commercial building, and infrastructure development projects by our expert builder and architect team.

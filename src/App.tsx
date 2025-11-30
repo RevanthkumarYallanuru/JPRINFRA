@@ -27,6 +27,7 @@ import AdminProjects from "./pages/admin/Projects";
 import ProjectForm from "./pages/admin/ProjectForm";
 import ProjectTasks from "./pages/admin/ProjectTasks";
 import AdminSetup from "./pages/admin/Setup.tsx";
+import AdminAchievements from "./pages/admin/Achievements";
 
 // Initialize React Query client for data fetching
 const queryClient = new QueryClient();
@@ -91,6 +92,14 @@ const App = () => (
                         element={
                           <ProtectedRoute requiredRole="viewer">
                             <AdminProjects />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="achievements"
+                        element={
+                          <ProtectedRoute requiredRole="manager">
+                            <AdminAchievements />
                           </ProtectedRoute>
                         }
                       />

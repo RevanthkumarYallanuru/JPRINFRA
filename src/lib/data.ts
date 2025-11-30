@@ -12,14 +12,14 @@ export const siteData = {
     logo: "/logo.jpg",
   },
   contact: {
-    email: "jprinfraworks@123gmail.com",
-    emailSecondary: "prinfraworks@123gmail.com",
+    email: "jprinfraworks123@gmail.com",
+    emailSecondary: "",
     phone: "+91 90196 62142",
-    phoneSecondary: "+91 90196 621421",
+    phoneSecondary: "",
     address: {
-      line1: "123 Construction Avenue",
-      line2: "Building City, India - 560001",
-      full: "123 Construction Ave, Building City, India",
+      line1: "12-433, 3rd Floor",
+      line2: "Saptagiri Colony, Renigunta Road, Tirupati-517501",
+      full: "Door No 12-433, 3rd Floor, Opposite to Health Care, Saptagiri Colony, Renigunta Road, Tirupati-517501, Andhra Pradesh",
     },
     workingHours: {
       weekdays: "Monday - Friday: 9:00 AM - 6:00 PM",
@@ -27,8 +27,8 @@ export const siteData = {
     },
   },
   social: {
-    facebook: "#",
-    instagram: "#",
+    facebook: "https://www.facebook.com/share/p/17n764JAWu/",
+    instagram: "https://www.instagram.com/jpr_infraworks_tpt/",
     linkedin: "#",
   },
   navLinks: [

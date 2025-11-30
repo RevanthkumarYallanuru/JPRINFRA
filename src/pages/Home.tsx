@@ -145,7 +145,7 @@ export default function Home() {
             }}
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
-              {company.name} - Premier Construction Company & Builder
+              {company.name} 
             </h1>
 
             <div className="h-1 w-32 bg-secondary mx-auto mb-6 shadow-[0_0_20px_rgba(226,232,240,0.6)]" />
@@ -237,7 +237,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary via-primary/90 to-secondary scroll-animate bg-slate-950 text-slate-50">
+      <section className="py-20 bg-slate-950 scroll-animate text-slate-50">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">Ready to Start Your Construction Project?</h2>
           <div className="h-1 w-32 bg-white mx-auto mb-6 animate-scale-in"></div>

@@ -13,6 +13,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ interface AdminLayoutProps {
 const navigation = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
+  { name: "Achievements", href: "/admin/achievements", icon: Award },
   { name: "Users", href: "/admin/users", icon: Users },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
