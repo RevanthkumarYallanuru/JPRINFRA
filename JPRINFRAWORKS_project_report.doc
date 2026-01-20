@@ -1,0 +1,268 @@
+JPRINFRAWORKS - Project Report
+
+Project: JPR INFRAWORKS Website
+Filename: JPRINFRAWORKS_project_report.doc
+Date: 2025-11-30
+Author: Automated report (edited by developer)
+
+Table of Contents
+1. Executive Summary
+2. Repository & Project Structure
+3. Tech Stack
+4. Key Features & Pages
+5. Firebase Integration (Auth, Firestore, Storage)
+6. Admin Dashboard (features + Achievements CRUD)
+7. Recent Changes Implemented
+   7.1 Contact form simplification
+   7.2 Achievements feature (backend + admin UI + About page)
+   7.3 Admin sidebar link for Achievements
+   7.4 CTA background adjustments for mobile
+8. How to run locally (development)
+9. Environment variables / Required configuration
+10. Testing & Validation Steps
+11. Deployment Notes
+12. Security & Rules Recommendations
+13. Known Issues and Troubleshooting
+14. Suggested Next Improvements
+15. Change log (files added/modified)
+
+
+1. Executive Summary
+
+This document summarizes the JPR INFRAWORKS web project (React + Vite) located in the repository. It provides project structure, stack, integration details (notably Firebase), admin capabilities, implemented changes, instructions to run and test locally, and recommendations for improvements and security.
+
+The recent work implemented the following primary items requested by the owner:
+- Simplify the contact form email sending (removed heavy HTML template and use plain-text Web3Forms submission, while still saving a backup to Firestore).
+- Add an Achievements feature: Firestore collection "achievements" + Firebase Storage image upload + Admin UI for create/update/delete + About page reads and displays achievements.
+- Add Achievements link to the admin sidebar for easy access.
+- Adjust CTA sections (just above footer) to use a plain black background (#121212 / `bg-slate-950`) for better mobile appearance.
+
+
+2. Repository & Project Structure (top-level)
+
+Root files of interest:
+- package.json, vite.config.ts, tsconfig.json
+- README.md, netlify.toml, vercel.json (deployment configs)
+
+src/ (front-end source)
+- App.tsx — application routes and admin routes registration
+- main.tsx — app entry
+- pages/ — page-level components (Home.tsx, About.tsx, Services.tsx, Projects.tsx, Contact.tsx, Quotation.tsx, admin/*)
+- components/ — global components (Header, Footer, Loader, SEO, etc.)
+- components/admin/ — admin layout and helpers
+- lib/ — utilities and firebase helper modules
+  - firebase/ (config.ts, auth.ts, projects.ts, leads.ts, dashboard.ts, achievements.ts)
+- ui/ — design system atoms and components
+
+
+3. Tech Stack
+
+- Frontend: React (TypeScript) with Vite
+- Styling/Utilities: Tailwind CSS (configured via tailwind.config.ts), custom UI components
+- Data fetching: React Query available (QueryClient configured)
+- Icons: lucide-react
+- Firebase: Firestore, Auth, Storage, Analytics
+- Email sending: Web3Forms (client-side POST to https://api.web3forms.com/submit)
+- Hosting / deployment: Vercel / Netlify configured (netlify.toml, vercel.json present)
+
+
+4. Key Features & Pages
+
+Public pages:
+- Home: Hero, Services, Features, CTA
+- About: Company info, mission/vision/values, and Achievements section (now dynamic)
+- Services: Services and CTA
+- Projects / ProjectDetail: Project lists and details (backend synced with Firestore)
+- Contact: Contact form (sends email via Web3Forms; also saved as backup to Firestore collection `contactLeads`)
+- Quotation: Quotation form / CTA
+
+Admin pages (protected):
+- /admin/dashboard — overview metrics (based on projects and tasks)
+- /admin/projects — project management
+- /admin/projects/new — project creation
+- /admin/achievements — new admin page to manage achievements (created)
+- /admin/login — admin authentication
+
+
+5. Firebase Integration (Auth, Firestore, Storage)
+
+Files in `src/lib/firebase` include:
+- config.ts — initializes Firebase app, exports `auth`, `db`, `storage`.
+  - Currently reads env vars prefixed with `VITE_FIREBASE_*`. Default values exist in the file and should be replaced with real credentials.
+- auth.ts — sign-in/sign-out helpers
+- projects.ts — CRUD operations for `projects` collection and `tasks` subcollections
+- leads.ts — `saveContactLead` and `saveQuotationRequest` add docs to `contactLeads` and `quotationRequests`
+- dashboard.ts — aggregates metrics for the admin dashboard
+- achievements.ts — (added) provides get/create/update/delete helpers for `achievements` collection and a helper to upload image files to Firebase Storage under `achievements/`
+
+Important notes about achievements implementation:
+- Document fields: `title`, `description`, `imageUrl`, `date`, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`.
+- Image upload uses Firebase Storage; uploaded file is placed under `achievements/<timestamp>_filename` and the download URL is saved into the Firestore document.
+
+
+6. Admin Dashboard (features + Achievements CRUD)
+
+- New Admin page: `src/pages/admin/Achievements.tsx`
+  - Provides form to create/update an achievement with: Title (required), Description, Date, Photo via File upload or Image URL.
+  - If both file and URL are provided, the uploaded file takes precedence.
+  - Form shows a preview of the selected file name or the image from the provided URL.
+  - After create/update, admin UI reloads achievements.
+- Achievements CRUD helpers: `src/lib/firebase/achievements.ts` — functions `getAchievements`, `createAchievement`, `updateAchievement`, `deleteAchievement`.
+- Admin layout (`src/components/admin/AdminLayout.tsx`) has been updated to include the Achievements link in the sidebar for quick access.
+
+
+7. Recent Changes Implemented (detailed)
+
+7.1 Contact form simplification
+- File changed: `src/pages/Contact.tsx`.
+- Removed the heavy HTML email template and large formatted HTML payload. Instead the contact form constructs a simple plain-text `message` and posts it to Web3Forms (same access_key as before).
+- The form still calls `saveContactLead` to store a backup in Firestore `contactLeads` in case email sending fails or for record-keeping.
+
+7.2 Achievements feature
+- New file: `src/lib/firebase/achievements.ts` — CRUD helpers + `uploadImage` (uses `uploadBytes` + `getDownloadURL`).
+- New admin page: `src/pages/admin/Achievements.tsx` — provides full create/edit/delete UI, accepts either file upload or image URL.
+- About page modified: `src/pages/About.tsx` now fetches `achievements` and displays them in a grid.
+- Admin sidebar link added: `src/components/admin/AdminLayout.tsx` now includes Achievements in navigation.
+
+7.3 CTA background adjustments for mobile
+- Changed CTA sections (Home, Services, Quotation) to use plain dark background (`bg-slate-950`, hex approx `#0f1724` depending on Tailwind config) instead of gradient to improve mobile rendering.
+  - Files changed: `src/pages/Home.tsx`, `src/pages/Services.tsx`, `src/pages/Quotation.tsx`.
+
+7.4 Other fixes
+- Fixed upload bug in `achievements.ts` that used `uploadBytesResumable` incorrectly with `await`. Replaced with `uploadBytes` and `getDownloadURL` which are promise-based and suitable for await usage.
+- Fixed JSX syntax issues introduced during iterative edits of the admin achievements form.
+
+
+8. How to run locally (development)
+
+Prerequisites:
+- Node.js (recommended 18+)
+- pnpm or npm or yarn
+
+Install and run:
+
+Windows PowerShell commands:
+
+pnpm install
+pnpm dev
+
+(Or using npm)
+
+npm install
+npm run dev
+
+App will be available at `http://localhost:5173` (default Vite port) unless configured otherwise.
+
+Notes: The app requires Firebase environment variables for full functionality (Auth, Firestore, Storage). Without valid Firebase configuration, the admin features and data persistence will not work and will error in the browser console.
+
+
+9. Environment variables / Required configuration
+
+Add these to a `.env` (Vite) file or set in your hosting environment:
+
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_MEASUREMENT_ID=
+
+Additional envs used by the app (if any) should be checked in `vite.config.ts` and the README.
+
+Web3Forms:
+- The contact form uses a Web3Forms `access_key` that was embedded in the Contact page. Verify the access key matches the account configuration and that the `to` recipient is allowed in the Web3Forms dashboard.
+
+
+10. Testing & Validation Steps
+
+Manual test checklist:
+- Contact form:
+  - Fill out the form and submit.
+  - Verify email delivery (via Web3Forms incoming email).
+  - Verify a `contactLeads` document in Firestore is created.
+  - Observe successful toasts in UI or actionable error messages.
+
+- Achievements (Admin):
+  - Log in to admin (`/admin/login`) with manager-role credentials.
+  - Open `/admin/achievements` via sidebar link.
+  - Create a new achievement using:
+    - Image URL only → verify the document in Firestore has `imageUrl` and About page displays it.
+    - Upload file only → verify Storage file is created and `imageUrl` saved to doc, About page displays it.
+    - Both file and URL → file upload takes precedence; verify saved `imageUrl` points to Storage.
+  - Edit an existing achievement and verify changes.
+  - Delete an achievement and verify Firestore doc is removed. (Note: Storage file is not deleted automatically unless implemented.)
+
+- About page:
+  - Visit `/about` and ensure achievements are displayed.
+
+- CTA styles:
+  - Test Home, Services, Quotation pages on mobile viewport (Chrome devtools) and verify the CTA background looks consistent (plain black) and text / buttons are readable.
+
+
+11. Deployment Notes
+
+- The project includes `netlify.toml` and `vercel.json`. When deploying to Vercel or Netlify, set the Firebase env vars in the hosting platform settings.
+- Ensure build command `pnpm build` or `npm run build` is used and the correct publish directory (Vite default `dist`) is set.
+
+
+12. Security & Rules Recommendations
+
+- Firestore rules: restrict writes to `achievements` and `projects` to authenticated admin users (and preferably role-based). Currently the project relies on Auth + ProtectedRoute in the client, but you must enforce rules in Firestore security.
+- Storage rules: only allow upload/delete for authenticated users with the proper admin role. Avoid allowing public write access.
+- Consider server-side email sending or serverless function (Netlify Functions / Vercel Serverless) for the contact form to prevent exposing third-party access keys in client code.
+
+
+13. Known Issues and Troubleshooting
+
+- If create/update of achievements fails with errors during upload:
+  - Check browser console for CORS or permission errors.
+  - Ensure Firebase Storage and Firestore rules allow the current authenticated user to upload and write documents.
+  - Confirm `.env` values for Firebase are set correctly.
+- Deleting achievements does not delete the corresponding storage object — storage cleanup must be implemented if required.
+
+
+14. Suggested Next Improvements
+
+- Implement automatic deletion of Storage files when the Firestore doc is deleted (either client-side or via Firebase Cloud Function triggered on document delete).
+- Add client-side image size validation (e.g., max 2MB) and format checking. Optionally add client-side image compression.
+- Move contact email sending to a serverless function to hide API keys and improve deliverability (and add reCAPTCHA for spam prevention).
+- Add pagination and search to Achievements admin list for large data sets.
+- Add role management UI for admin users.
+- Add unit/integration tests for critical flows (contact form, achievements CRUD) using a testing framework (Jest/Testing Library) and a Firebase emulator for integration tests.
+
+
+15. Change log (files added/modified)
+
+Added:
+- src/lib/firebase/achievements.ts — new helper for achievements CRUD + upload
+- src/pages/admin/Achievements.tsx — admin UI to manage achievements
+
+Modified:
+- src/pages/Contact.tsx — simplified email template (plain-text Web3Forms) and backup to Firestore preserved
+- src/pages/About.tsx — fetch and display achievements from Firestore
+- src/components/admin/AdminLayout.tsx — added Achievements item to admin sidebar
+- src/App.tsx — registered `/admin/achievements` route and import
+- src/pages/Home.tsx, src/pages/Services.tsx, src/pages/Quotation.tsx — CTA backgrounds changed to plain black for mobile readability
+- src/lib/firebase/achievements.ts — upload changed from `uploadBytesResumable` to `uploadBytes` to correctly work with async/await
+
+
+Appendix: Quick Commands
+
+# Install & run (dev)
+pnpm install
+pnpm dev
+
+# Build (production)
+pnpm build
+
+# Lint / format (if configured)
+# npm run lint
+# npm run format
+
+
+Contact / Support
+If you want me to: add storage cleanup on delete, implement serverless contact email sending, or add image validation & compression — tell me which one to implement next and I'll proceed.
+
+
+End of report

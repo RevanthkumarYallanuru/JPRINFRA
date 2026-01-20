@@ -27,7 +27,7 @@ export const siteData = {
     },
   },
   social: {
-    facebook: "https://www.facebook.com/share/p/17n764JAWu/",
+    facebook: "https://www.facebook.com/share/1XLGUSq4CZ/",
     instagram: "https://www.instagram.com/jpr_infraworks_tpt/",
     linkedin: "#",
   },
